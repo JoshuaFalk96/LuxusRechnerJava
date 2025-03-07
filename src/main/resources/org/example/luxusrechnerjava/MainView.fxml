@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -16,7 +17,15 @@
             </HBox>
             <VBox alignment="CENTER" fillWidth="false" prefHeight="120.0" spacing="10.0">
                <children>
-                  <Label alignment="CENTER" text="Zahlungseingang am :" textAlignment="CENTER" />
+                  <VBox fx:id="dateResetVbox" alignment="CENTER">
+                     <children>
+                        <Label alignment="CENTER" text="Zahlungseingang am :" textAlignment="CENTER" />
+                        <Label fx:id="dateResetLabel" alignment="CENTER" prefWidth="300.0" textAlignment="CENTER" textFill="#fc0000" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="-20.0" />
+                     </VBox.margin>
+                  </VBox>
                   <DatePicker fx:id="datePicker" prefWidth="130.0" promptText="Datum auswählen" />
                   <Button fx:id="confirmButton" alignment="CENTER" mnemonicParsing="false" onAction="#onClickConfirmButton" prefWidth="130.0" text="Bestätigen" />
                </children>
