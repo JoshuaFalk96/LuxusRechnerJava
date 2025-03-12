@@ -25,6 +25,12 @@ public class MainViewController {
 
     public void initialize() {
         datePicker.setValue(LocalDate.now());
+        //TODO read saveExpenses
+        boolean saveExpenses = Math.random() > 0.75;
+        //disable accesses to expensesView if not saving expenses
+        if (!saveExpenses) {
+            expensesButton.setDisable(true);
+        }
     }
 
     public void onClickCalculatorButton(ActionEvent actionEvent) {
