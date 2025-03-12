@@ -10,7 +10,7 @@ import java.io.IOException;
 public class LuxuryCalculatorMain extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("MainView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(LuxuryCalculatorMain.class.getResource("MainView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Luxusrechner");
         stage.setScene(scene);

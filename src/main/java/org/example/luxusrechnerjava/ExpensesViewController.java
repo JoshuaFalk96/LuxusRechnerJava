@@ -10,13 +10,16 @@ import javafx.scene.layout.VBox;
 public class ExpensesViewController extends SubViewController {
     public VBox budgetLabelVbox;
     public Label budgetResetLabel;
-    public TextField CurrentBudgetOutput;
+    public TextField currentBudgetOutput;
     public Button resetButton;
     public VBox newExpenseVBox;
     public Label newExpenseLabel;
     public TextField expensesInput;
     public Button addButton;
 
+    public void initialize() {
+        currentBudgetOutput.setText("100");
+    }
 
     private void resetInfoLabels() {
         VBox.setMargin(budgetLabelVbox, new Insets(0,0,-20,0));
@@ -33,9 +36,14 @@ public class ExpensesViewController extends SubViewController {
 
     public void onClickAddButton(ActionEvent actionEvent) {
         resetInfoLabels();
-        int newExpenses = Integer.getInteger(expensesInput.getText());
-        VBox.setMargin(newExpenseVBox, new Insets(0,0,-10,0));
-        newExpenseLabel.setText("Eine Ausgabe von " + newExpenses + "wurde gespeichert");
+        try {
+            int newExpenses = Integer.parseInt(expensesInput.getText());
+            VBox.setMargin(newExpenseVBox, new Insets(0,0,-10,0));
+            newExpenseLabel.setText("Eine Ausgabe von " + newExpenses + " wurde gespeichert");
+        } catch (NumberFormatException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }
