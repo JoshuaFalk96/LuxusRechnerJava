@@ -14,13 +14,25 @@ public class ExpensesViewController extends SubViewController {
     public Button resetButton;
     public VBox newExpenseVBox;
     public Label newExpenseLabel;
-    public TextField expensesInput;
+    public TextField expensesInputField;
     public Button addButton;
+    private int totalBudget;
+    private int savedExpenses;
 
     public void initialize() {
-        currentBudgetOutput.setText("100");
+        //TODO read saved week budget from config
+        totalBudget = 100; //placeholder
+
+        //TODO read currently saved expenses
+        savedExpenses = (int)(Math.random() * 50); //placeholder
+
+        //displays currently remaining budget before new expense is added
+        currentBudgetOutput.setText(String.valueOf(totalBudget - savedExpenses));
     }
 
+    /**
+     * resets all info labels in the view
+     */
     private void resetInfoLabels() {
         VBox.setMargin(budgetLabelVbox, new Insets(0,0,-20,0));
         VBox.setMargin(newExpenseVBox, new Insets(0,0,-20,0));
@@ -28,22 +40,62 @@ public class ExpensesViewController extends SubViewController {
         newExpenseLabel.setText("");
     }
 
+    /**
+     * On clicking reset button sets saved expenses to 0, resetting the current week budget.
+     * Informs user of reset and updates current budget.
+     * @param actionEvent The Event triggering this function, unused
+     */
     public void onClickResetButton(ActionEvent actionEvent) {
         resetInfoLabels();
+        //set local saved expenses
+        savedExpenses = 0;
+        //TODO write expenses = 0 to memory
+
+        //informs user that expenses and budget have been reset
         VBox.setMargin(budgetLabelVbox, new Insets(0,0,-10,0));
         budgetResetLabel.setText("Budget wurde zurückgesetz");
+        //updates current budget field to total budget as expenses are 0
+        currentBudgetOutput.setText(String.valueOf(totalBudget));
     }
 
+    /**
+     * On clicking the add button checks if the expenses input is filled and tries to
+     * parse input as integer, displays error messages if necessary.
+     * Adds input expenses to saved expenses and updates saved expenses.
+     * Displays added expenses to user and refreshes current budget field.
+     * @param actionEvent The Event triggering this function, unused
+     */
     public void onClickAddButton(ActionEvent actionEvent) {
         resetInfoLabels();
-        try {
-            int newExpenses = Integer.parseInt(expensesInput.getText());
+        //checks if expenses input field is empty
+        String expensesInput = expensesInputField.getText();
+        if (expensesInput.isBlank()) {
             VBox.setMargin(newExpenseVBox, new Insets(0,0,-10,0));
-            newExpenseLabel.setText("Eine Ausgabe von " + newExpenses + " wurde gespeichert");
+            newExpenseLabel.setText("Das Eingabefeld muss gefüllt sein");
+            return;
+        }
+        //parse expenses input to int
+        int newExpenses;
+        try {
+            newExpenses = Integer.parseInt(expensesInput);
         } catch (NumberFormatException e) {
-            throw new RuntimeException(e);
+            //input in expenses field is not a valid integer
+            VBox.setMargin(newExpenseVBox, new Insets(0,0,-10,0));
+            newExpenseLabel.setText("Die Eingabe ist keine korrekte ganze Zahl");
+            return;
         }
 
+        //adjusts local saved expenses
+        savedExpenses = savedExpenses + newExpenses;
+
+        //TODO write new expenses to storage
+
+        //informs user that expense of input amount has been added to saved value
+        VBox.setMargin(newExpenseVBox, new Insets(0,0,-10,0));
+        newExpenseLabel.setText("Eine Ausgabe von " + newExpenses + " wurde gespeichert");
+
+        //sets the current budget output to new value after adding new expenses
+        currentBudgetOutput.setText(String.valueOf(totalBudget - savedExpenses));
     }
 
 }

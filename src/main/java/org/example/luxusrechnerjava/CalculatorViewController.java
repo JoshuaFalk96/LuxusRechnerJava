@@ -24,15 +24,16 @@ public class CalculatorViewController extends SubViewController {
 
     public void initialize() {
         //TODO replace with real calculation for dates
-        int remainingWeeks = (int) (Math.random() * 4);
-        int remainingDays = (int) (Math.random() * 8);
+        int remainingWeeks = (int) (Math.random() * 4);//placeholder
+        int remainingDays = (int) (Math.random() * 8);//placeholder
 
         //displaying remaining time till next planed reset
         String remainingDaysString = (remainingDays == 0) ? "" : " und " + remainingDays + " Tage";
         remainingTimeLabel.setText("Noch " + remainingWeeks + " Wochen" + remainingDaysString);
 
         //TODO read config for saveExpenses
-        saveExpenses = Math.random() > 0.5;
+        saveExpenses = Math.random() > 0.5; //placeholder
+
         //hiding expenses Input and centering balance input if expenses are saved
         if (saveExpenses) {
             expensesVBox.setDisable(true);
@@ -40,15 +41,25 @@ public class CalculatorViewController extends SubViewController {
             HBox.setMargin(balanceVBox, new Insets(0, 0, 0, 135));
 
             //TODO read expenses
-            expenses = (int) (Math.random() * 101);
+            expenses = (int) (Math.random() * 101); //placeholder
         }
     }
 
+    /**
+     * resets all Error labels in the view
+     */
     private void resetErrorLabels() {
         balanceErrorLabel.setText("");
         expensesErrorLabel.setText("");
     }
 
+    /**
+     * On clicking the calculate button checks if input field are set correctly
+     * and sets error messages in error fields if necessary
+     * then calls calculator to calculate luxury money from balance and expenses,
+     * displays calculated luxury money and remaining week budget
+     * @param actionEvent The Event triggering this function, unused
+     */
     public void onClickCalculateButton(ActionEvent actionEvent) {
         resetErrorLabels();
         //check  if balance input field is empty
@@ -63,7 +74,7 @@ public class CalculatorViewController extends SubViewController {
             balance = Integer.parseInt(balanceInput);
         } catch (NumberFormatException e) {
             //input is not valid int
-            balanceErrorLabel.setText("Keine korrekte Zahl eingegeben");
+            balanceErrorLabel.setText("Keine korrekte ganze Zahl eingegeben");
             return;
         }
         //expenses input only exists if expenses not saved
@@ -79,17 +90,20 @@ public class CalculatorViewController extends SubViewController {
                 expenses = Integer.parseInt(expensesInput);
             } catch (NumberFormatException e) {
                 //input is not valid int
-                expensesErrorLabel.setText("Keine korrekte Zahl eingegeben");
+                expensesErrorLabel.setText("Keine korrekte ganze Zahl eingegeben");
                 return;
             }
         } //no else case as saved expenses already read in initialize methode
 
         //TODO call calculator
+        int luxuryMoney = balance; //placeholder
 
-        //display calculated luxury money
-        remainingBudgetOutputField.setText(String.valueOf(expenses));
+        //TODO read week budget from config
+         int budget = 100; //placeholder
+
         //display remaining budget for current week
-        luxuryMoneyOutputField.setText(String.valueOf(balance));
-
+        remainingBudgetOutputField.setText(String.valueOf(budget - expenses));
+        //display calculated luxury money
+        luxuryMoneyOutputField.setText(String.valueOf(luxuryMoney));
     }
 }

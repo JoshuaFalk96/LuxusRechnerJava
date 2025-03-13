@@ -12,7 +12,21 @@
                <children>
                   <Button fx:id="calculatorButton" alignment="CENTER" mnemonicParsing="false" onAction="#onClickCalculatorButton" prefWidth="130.0" text="Luxusgeld berechnen" />
                   <Pane prefWidth="130.0" />
-                  <Button fx:id="expensesButton" alignment="CENTER" mnemonicParsing="false" onAction="#onClickExpensesButton" prefWidth="130.0" text="Ausgabe angeben" />
+                  <VBox alignment="CENTER" prefWidth="130.0">
+                     <children>
+                        <Button fx:id="expensesButton" alignment="CENTER" mnemonicParsing="false" onAction="#onClickExpensesButton" prefWidth="130.0" text="Ausgabe angeben" />
+                        <Label fx:id="expensesInfoLabel1" text="Ausgaben werden momentan" visible="false">
+                           <VBox.margin>
+                              <Insets left="-20.0" right="-20.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="expensesInfoLabel2" text="nicht gespeichert" visible="false">
+                           <VBox.margin>
+                              <Insets bottom="-34.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
             </HBox>
             <VBox alignment="CENTER" fillWidth="false" prefHeight="120.0" spacing="10.0">

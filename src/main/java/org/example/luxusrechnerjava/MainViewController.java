@@ -22,61 +22,68 @@ public class MainViewController {
     public Button configButton;
     public Label dateResetLabel;
     public VBox dateResetVbox;
+    public Label expensesInfoLabel2;
+    public Label expensesInfoLabel1;
 
     public void initialize() {
+        //set the date picker to have today's date as default
         datePicker.setValue(LocalDate.now());
+
         //TODO read saveExpenses
-        boolean saveExpenses = Math.random() > 0.75;
-        //disable accesses to expensesView if not saving expenses
+        boolean saveExpenses = Math.random() > 0.25; //placeholder
+
+
         if (!saveExpenses) {
+            //disable accesses to expensesView if not saving expenses
             expensesButton.setDisable(true);
+            //display reminder text that expenses not saved visible
+            expensesInfoLabel1.setVisible(true);
+            expensesInfoLabel2.setVisible(true);
         }
     }
 
-    public void onClickCalculatorButton(ActionEvent actionEvent) {
+    /**
+     * Opens another FXML View in the same window, replacing MainView.
+     * @param fxml Name of the FXML file
+     * @param title The new window title to use
+     */
+    private void openView(String fxml, String title) {
         try {
             Stage stage = (Stage) calculatorButton.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("CalculatorView.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource(fxml));
             Scene scene = new Scene(fxmlLoader.load());
-            stage.setTitle("Luxusrechner - Berechnen");
+            stage.setTitle(title);
             stage.setScene(scene);
             stage.sizeToScene();
+            //unused view controllers are handled by garbage collection
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void onClickExpensesButton(ActionEvent actionEvent) {
-        try {
-            Stage stage = (Stage) expensesButton.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("ExpensesView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            stage.setTitle("Luxusrechner - Ausgaben");
-            stage.setScene(scene);
-            stage.sizeToScene();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
+    /**
+     * On clicking the confirm button sets the internally saved reset date
+     * to the date currently in the dae picker and prints the saved date as
+     * info in the view.
+     * @param actionEvent The Event triggering this function, unused
+     */
     public void onClickConfirmButton(ActionEvent actionEvent) {
-        VBox.setMargin(dateResetVbox, new Insets(0, 0, -10, 0));
         LocalDate date = datePicker.getValue();
+        //output information text to confirm action
+        VBox.setMargin(dateResetVbox, new Insets(0, 0, -10, 0));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         dateResetLabel.setText("Anfang des Zeitraums gesetzt auf den " + date.format(formatter));
     }
 
+    public void onClickCalculatorButton(ActionEvent actionEvent) {
+        openView("CalculatorView.fxml", "Luxusrechner - Berechnen");
+    }
+
+    public void onClickExpensesButton(ActionEvent actionEvent) {
+        openView("ExpensesView.fxml", "Luxusrechner - Ausgaben");
+    }
+
     public void onClickConfigButton(ActionEvent actionEvent) {
-        try {
-            Stage stage = (Stage) configButton.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("ConfigView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            stage.setTitle("Luxusrechner - Einstellungen");
-            stage.setScene(scene);
-            stage.sizeToScene();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        openView("ConfigView.fxml", "Luxusrechner - Einstellungen");
     }
 }
