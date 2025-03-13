@@ -11,7 +11,7 @@
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <Label text="Wochenbudget" />
-                  <Button fx:id="budgetInfoButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
+                  <Button fx:id="budgetInfoButton" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
                   <TextField fx:id="budgetInputField" prefWidth="180.0" promptText="Aktuell : 100" />
                   <Button fx:id="budgetConfirmButton" mnemonicParsing="false" onAction="#onClickBudgetConfirmButton" prefWidth="40.0" text="OK" />
                </children>
@@ -21,7 +21,7 @@
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <Label text="Länge des Berechnungszeitraums" />
-                  <Button fx:id="resetCycleInfoButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
+                  <Button fx:id="resetCycleInfoButton" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
                   <TextField fx:id="resetCycleInputField" prefWidth="180.0" promptText="Aktuell: 30 Tage" />
                   <Button fx:id="resetCycleConfirmButton" mnemonicParsing="false" onAction="#onClickResetCycleConfirmButton" prefWidth="40.0" text="OK" />
                </children>
@@ -31,7 +31,7 @@
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <Label text="Wochenformat" />
-                  <Button fx:id="weekFormatInfoButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
+                  <Button fx:id="weekFormatInfoButton" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
                   <Button fx:id="weekFormatMoSoButton" mnemonicParsing="false" onAction="#onClickWeekFormatMoSoButton" prefWidth="110.0" text="Mo - So" />
                   <Button fx:id="weekFormat7DaysButton" mnemonicParsing="false" onAction="#onClickWeekFormat7DaysButton" prefWidth="110.0" text="7 Tage ab Gehalt" />
                </children>
@@ -41,7 +41,7 @@
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <Label text="Ausgaben Speichern" />
-                  <Button fx:id="saveExpensesInfoButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
+                  <Button fx:id="saveExpensesInfoButton" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
                   <Button fx:id="saveExpensesYesButton" mnemonicParsing="false" onAction="#onClickSaveExpensesYesButton" prefWidth="110.0" text="Ja" />
                   <Button fx:id="saveExpensesNoButton" mnemonicParsing="false" onAction="#onClickSaveExpensesNoButton" prefWidth="110.0" text="Nein" />
                </children>
@@ -51,7 +51,7 @@
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <Label text="Verhalten bei Teilwochen" />
-                  <Button fx:id="partWeekInfoButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
+                  <Button fx:id="partWeekInfoButton" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
                   <Button fx:id="partWeekParBudgetButton" mnemonicParsing="false" onAction="#onClickPartWeekPartBudgetButton" prefWidth="110.0" text="Teil Budget" />
                   <Button fx:id="partWeekFullBudgetButton" mnemonicParsing="false" onAction="#onClickPartWeekFullBudgetButton" prefWidth="110.0" text="Volles Budget" />
                </children>
