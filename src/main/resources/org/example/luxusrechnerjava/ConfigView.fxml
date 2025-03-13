@@ -1,10 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.luxusrechnerjava.ConfigViewController">
+<AnchorPane prefHeight="360.0" prefWidth="540.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.luxusrechnerjava.ConfigViewController">
    <children>
-      <Button fx:id="returnButton" layoutX="182.0" layoutY="157.0" mnemonicParsing="false" onAction="#onClickReturnButton" text="Zurück" />
+      <VBox alignment="CENTER" prefHeight="360.0" prefWidth="540.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label text="Wochenbudget" />
+                  <Button fx:id="budgetInfoButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
+                  <TextField fx:id="budgetInputField" prefWidth="180.0" promptText="Aktuell : 100" />
+                  <Button fx:id="budgetConfirmButton" mnemonicParsing="false" onAction="#onClickBudgetConfirmButton" prefWidth="40.0" text="OK" />
+               </children>
+               <padding>
+                  <Insets right="18.0" />
+               </padding></HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label text="Länge des Berechnungszeitraums" />
+                  <Button fx:id="resetCycleInfoButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
+                  <TextField fx:id="resetCycleInputField" prefWidth="180.0" promptText="Aktuell: 30 Tage" />
+                  <Button fx:id="resetCycleConfirmButton" mnemonicParsing="false" onAction="#onClickResetCycleConfirmButton" prefWidth="40.0" text="OK" />
+               </children>
+               <padding>
+                  <Insets right="18.0" />
+               </padding></HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label text="Wochenformat" />
+                  <Button fx:id="weekFormatInfoButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
+                  <Button fx:id="weekFormatMoSoButton" mnemonicParsing="false" onAction="#onClickWeekFormatMoSoButton" prefWidth="110.0" text="Mo - So" />
+                  <Button fx:id="weekFormat7DaysButton" mnemonicParsing="false" onAction="#onClickWeekFormat7DaysButton" prefWidth="110.0" text="7 Tage ab Gehalt" />
+               </children>
+               <padding>
+                  <Insets right="18.0" />
+               </padding></HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label text="Ausgaben Speichern" />
+                  <Button fx:id="saveExpensesInfoButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
+                  <Button fx:id="saveExpensesYesButton" mnemonicParsing="false" onAction="#onClickSaveExpensesYesButton" prefWidth="110.0" text="Ja" />
+                  <Button fx:id="saveExpensesNoButton" mnemonicParsing="false" onAction="#onClickSaveExpensesNoButton" prefWidth="110.0" text="Nein" />
+               </children>
+               <padding>
+                  <Insets right="18.0" />
+               </padding></HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label text="Verhalten bei Teilwochen" />
+                  <Button fx:id="partWeekInfoButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
+                  <Button fx:id="partWeekParBudgetButton" mnemonicParsing="false" onAction="#onClickPartWeekPartBudgetButton" prefWidth="110.0" text="Teil Budget" />
+                  <Button fx:id="partWeekFullBudgetButton" mnemonicParsing="false" onAction="#onClickPartWeekFullBudgetButton" prefWidth="110.0" text="Volles Budget" />
+               </children>
+               <padding>
+                  <Insets right="18.0" />
+               </padding></HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="returnButton" mnemonicParsing="false" onAction="#onClickReturnButton" prefWidth="130.0" text="Zurück" textAlignment="CENTER" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

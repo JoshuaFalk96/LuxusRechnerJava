@@ -69,6 +69,8 @@ public class MainViewController {
      */
     public void onClickConfirmButton(ActionEvent actionEvent) {
         LocalDate date = datePicker.getValue();
+        //TODO save the new date as reset date in memory
+
         //output information text to confirm action
         VBox.setMargin(dateResetVbox, new Insets(0, 0, -10, 0));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
