@@ -20,7 +20,7 @@ public class CalculatorViewController extends SubViewController {
     public VBox balanceVBox;
     public VBox expensesVBox;
     boolean saveExpenses;
-    private int expenses;
+    private Integer expenses;
 
     @Override
     public void initialize() {
@@ -30,8 +30,7 @@ public class CalculatorViewController extends SubViewController {
         int remainingDays = (int) (Math.random() * 8);//placeholder
 
         //displaying remaining time till next planed reset
-        String remainingDaysString = (remainingDays == 0) ? "" : " und " + remainingDays + " Tage";
-        remainingTimeLabel.setText("Noch " + remainingWeeks + " Wochen" + remainingDaysString);
+        remainingTimeLabel.setText(IOHandler.buildRemainingTimeOutput(remainingWeeks,remainingDays));
 
         //TODO read config for saveExpenses
         saveExpenses = Math.random() > 0.5; //placeholder
@@ -43,7 +42,7 @@ public class CalculatorViewController extends SubViewController {
             HBox.setMargin(balanceVBox, new Insets(0, 0, 0, 135));
 
             //TODO read expenses
-            expenses = (int) (Math.random() * 101); //placeholder
+            expenses = (int) (Math.random() * 10000); //placeholder
         }
     }
 
@@ -64,48 +63,24 @@ public class CalculatorViewController extends SubViewController {
      */
     public void onClickCalculateButton(ActionEvent actionEvent) {
         resetErrorLabels();
-        //check  if balance input field is empty
-        String balanceInput = balanceInputField.getText();
-        if (balanceInput.isBlank()) {
-            balanceErrorLabel.setText("Input notwendig");
-            return;
-        }
-        //read input Field for balance and convert to int
-        int balance;
-        try {
-            balance = Integer.parseInt(balanceInput);
-        } catch (NumberFormatException e) {
-            //input is not valid int
-            balanceErrorLabel.setText("Keine korrekte ganze Zahl eingegeben");
-            return;
-        }
+        //get input as int
+        Integer balance = IOHandler.parseInteger(balanceInputField.getText(), balanceErrorLabel);
         //expenses input only exists if expenses not saved
         if (!saveExpenses) {
-            //check if expenses input field is empty
-            String expensesInput = expensesInputField.getText();
-            if (expensesInput.isBlank()) {
-                expensesErrorLabel.setText("Input notwendig");
-                return;
-            }
-            //read expenses input and convert to int
-            try {
-                expenses = Integer.parseInt(expensesInput);
-            } catch (NumberFormatException e) {
-                //input is not valid int
-                expensesErrorLabel.setText("Keine korrekte ganze Zahl eingegeben");
-                return;
-            }
+            //get input as int
+            expenses = IOHandler.parseInteger(expensesInputField.getText(), expensesErrorLabel);
         } //no else case as saved expenses already read in initialize methode
+        if (balance == null || expenses == null) return; //inputs are not set correctly
 
         //TODO call calculator
         int luxuryMoney = balance; //placeholder
 
         //TODO read week budget from config
-         int budget = 100; //placeholder
+         int budget = 10000; //placeholder
 
         //display remaining budget for current week
-        remainingBudgetOutputField.setText(String.valueOf(budget - expenses));
+        remainingBudgetOutputField.setText(IOHandler.buildMoneyOutput(budget - expenses));
         //display calculated luxury money
-        luxuryMoneyOutputField.setText(String.valueOf(luxuryMoney));
+        luxuryMoneyOutputField.setText(IOHandler.buildMoneyOutput(luxuryMoney));
     }
 }
