@@ -1,5 +1,6 @@
 package org.example.luxusrechnerjava;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,12 +9,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class SubViewController {
+public abstract class SubViewController {
     public Button returnButton;
+
+    public void initialize() {
+        Platform.runLater(() -> returnButton.requestFocus());
+    }
 
     /**
      * On clicking return button on any view that is not MainView sets the view
      * to MainView replacing the current view.
+     *
      * @param actionEvent The Event triggering this function, unused
      */
     public void onClickReturnButton(ActionEvent actionEvent) {

@@ -46,7 +46,9 @@ public class ConfigViewController extends SubViewController {
         resetCycleInputField.setPromptText("Aktuell: " + days + " Tage");
     }
 
+    @Override
     public void initialize() {
+        super.initialize();
         //add tooltips to info buttons
         addTooltip(budgetInfoButton, budgetInfo);
         addTooltip(resetCycleInfoButton, cycleLengthInfo);

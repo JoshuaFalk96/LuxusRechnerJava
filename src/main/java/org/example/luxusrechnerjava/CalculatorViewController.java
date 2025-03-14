@@ -22,7 +22,9 @@ public class CalculatorViewController extends SubViewController {
     boolean saveExpenses;
     private int expenses;
 
+    @Override
     public void initialize() {
+        super.initialize();
         //TODO replace with real calculation for dates
         int remainingWeeks = (int) (Math.random() * 4);//placeholder
         int remainingDays = (int) (Math.random() * 8);//placeholder

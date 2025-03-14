@@ -19,7 +19,9 @@ public class ExpensesViewController extends SubViewController {
     private int totalBudget;
     private int savedExpenses;
 
+    @Override
     public void initialize() {
+        super.initialize();
         //TODO read saved week budget from config
         totalBudget = 100; //placeholder
 
