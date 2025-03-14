@@ -5,9 +5,9 @@ import javafx.scene.control.Labeled;
 public class IOHandler {
     public static final String BUDGETINFO = "Wie hoch ist das Budget pro Woche in ganzen Euro";
     public static final String CYCLELENGTHINFO = "Wie viele Tage vergehen gewöhnlich zwischen Zahlungen";
-    public static final String WEEKFORMATINFO = "Wochen können von Montag bis Sonntag oder in 7 Tage Abschnitten ab Zahlungeingang berechnet werden";
+    public static final String WEEKFORMATINFO = "Wochen können von Montag bis Sonntag oder \n in 7 Tage Abschnitten ab Zahlungeingang berechnet werden";
     public static final String SAVEEXPENESINFO = "Sollen die Ausgaben der aktuellen Woche gespeichert werden?";
-    public static final String PARTBUDGETINFO = "Wenn der Zeitraum nicht volle Wochen enthält, werden diese als ganze Wochen bertachtet oder das Budget entsprechend der Tage verringert";
+    public static final String PARTBUDGETINFO = "Wenn der Zeitraum nicht volle Wochen enthält, werden diese \n als ganze Wochen bertachtet oder das Budget entsprechend \n der Tage verringert";
     public static final String BUDGETRESET = "Budget wurde zurückgesetz";
     private static final String FRONTCURRENCYSYMBOL = ""; //for currencies like $100
     private static final String BACKCURRENCYSYMBOL = "€"; //for currencies like 100€
@@ -69,7 +69,14 @@ public class IOHandler {
     }
 
     public static String buildMoneyOutput(int amount) {
-        return FRONTCURRENCYSYMBOL + (amount / 100) + SUBCURRENCYDEVIDER + (amount % 100) + BACKCURRENCYSYMBOL;
+        int fraction = amount % CURRENCYCONVERGIONFACTOR;
+        StringBuilder fractionString = new StringBuilder(String.valueOf(fraction));
+        if (fraction < (CURRENCYCONVERGIONFACTOR / 10)) {
+            for (int i = 1; i < String.valueOf(CURRENCYCONVERGIONFACTOR).length() -1; i++) {
+                fractionString.insert(0, "0");
+            }
+        }
+        return FRONTCURRENCYSYMBOL + (amount / CURRENCYCONVERGIONFACTOR) + SUBCURRENCYDEVIDER + fractionString + BACKCURRENCYSYMBOL;
     }
 
     public static String buildNexExpensesOutput(int newExpenses) {
@@ -77,7 +84,14 @@ public class IOHandler {
     }
 
     public static String buildBudgetOutput(int budget) {
-        return CURRNTLY + FRONTCURRENCYSYMBOL + (budget / 100) + SUBCURRENCYDEVIDER + (budget % 100) + BACKCURRENCYSYMBOL;
+        int fraction = budget % CURRENCYCONVERGIONFACTOR;
+        StringBuilder fractionString = new StringBuilder(String.valueOf(fraction));
+        if (fraction < (CURRENCYCONVERGIONFACTOR / 10)) {
+            for (int i = 1; i < String.valueOf(CURRENCYCONVERGIONFACTOR).length() -1; i++) {
+                fractionString.insert(0, "0");
+            }
+        }
+        return CURRNTLY + FRONTCURRENCYSYMBOL + (budget / CURRENCYCONVERGIONFACTOR) + SUBCURRENCYDEVIDER + fractionString + BACKCURRENCYSYMBOL;
     }
 
     public static String buildCycleOutput(int days) {

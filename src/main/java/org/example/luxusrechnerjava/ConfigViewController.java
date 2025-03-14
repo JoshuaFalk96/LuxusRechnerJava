@@ -44,7 +44,7 @@ public class ConfigViewController extends SubViewController {
         //output current values to input fields
         //TODO read current values for budget and cycleLength
         budget = (int)(Math.random() * 2000 + 9000); //placeholder
-        cycleLength = (int)(Math.random() * 500 + 2800); //placeholder
+        cycleLength = (int)(Math.random() * 5 + 28); //placeholder
 
         budgetInputField.setPromptText(IOHandler.buildBudgetOutput(budget));
         resetCycleInputField.setPromptText(IOHandler.buildCycleOutput(cycleLength));
