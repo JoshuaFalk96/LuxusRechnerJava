@@ -42,20 +42,19 @@ public class ConfigViewController extends SubViewController {
         addTooltip(weekFormatInfoButton, IOHandler.WEEK_FORMAT_INFO);
         addTooltip(saveExpensesInfoButton, IOHandler.SAVE_EXPENSES_INFO);
         addTooltip(partWeekInfoButton, IOHandler.PART_BUDGET_INFO);
-        //output current values to input fields
-        //TODO read current values for budget and cycleLength
-        budget = (int) (Math.random() * 2000 + 9000); //placeholder
-        cycleLength = (int) (Math.random() * 5 + 28); //placeholder
 
+        //read current values for budget and cycleLength
+        budget = LuxuryCalculatorMain.dataManager.getBudgetConfig();
+        cycleLength = LuxuryCalculatorMain.dataManager.getCycleLengthConfig();
+        //output current values to input fields
         budgetInputField.setPromptText(IOHandler.buildBudgetOutput(budget));
         cycleInputField.setPromptText(IOHandler.buildCycleOutput(cycleLength));
 
+        //read weekFormat, saveExpenses and partBudget from config
+        WeekFormat weekFormat = LuxuryCalculatorMain.dataManager.getWeekFormatConfig();
+        boolean saveExpenses = LuxuryCalculatorMain.dataManager.getSaveExpensesConfig();
+        boolean partBudget = LuxuryCalculatorMain.dataManager.getPartBudgetConfig();
         //highlight buttons for current config
-        //TODO read weekFormat, saveExpenses and partBudget from config
-        WeekFormat weekFormat = (Math.random() > 0.5) ? WeekFormat.MO_TO_SO : WeekFormat.SEVEN_DAYS; //placeholder
-        boolean saveExpenses = (Math.random() > 0.5); //placeholder
-        boolean partBudget = (Math.random() > 0.5); //placeholder
-
         if (weekFormat == WeekFormat.MO_TO_SO) {
             weekFormatMoSoButton.setStyle("-fx-opacity:1.0");
             weekFormat7DaysButton.setStyle("-fx-opacity:0.5");

@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LuxuryCalculatorMain extends Application {
+    static DataManager dataManager;
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(LuxuryCalculatorMain.class.getResource("MainView.fxml"));
@@ -18,6 +19,7 @@ public class LuxuryCalculatorMain extends Application {
     }
 
     public static void main(String[] args) {
+        dataManager = new RAMManager();
         launch();
     }
 }

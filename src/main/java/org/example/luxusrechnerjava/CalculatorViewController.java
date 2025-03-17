@@ -32,8 +32,8 @@ public class CalculatorViewController extends SubViewController {
         //displaying remaining time till next planed reset
         remainingTimeLabel.setText(IOHandler.buildRemainingTimeOutput(remainingWeeks,remainingDays));
 
-        //TODO read config for saveExpenses
-        saveExpenses = Math.random() > 0.5; //placeholder
+        //read config for saveExpenses
+        saveExpenses = LuxuryCalculatorMain.dataManager.getSaveExpensesConfig();
 
         //hiding expenses Input and centering balance input if expenses are saved
         if (saveExpenses) {
@@ -41,8 +41,8 @@ public class CalculatorViewController extends SubViewController {
             expensesVBox.setVisible(false);
             HBox.setMargin(balanceVBox, new Insets(0, 0, 0, 135));
 
-            //TODO read expenses
-            expenses = (int) (Math.random() * 10000); //placeholder
+            //read saved expenses
+            expenses = LuxuryCalculatorMain.dataManager.getSavedExpenses();
         }
     }
 
@@ -75,8 +75,8 @@ public class CalculatorViewController extends SubViewController {
         //TODO call calculator
         int luxuryMoney = balance; //placeholder
 
-        //TODO read week budget from config
-         int budget = 10000; //placeholder
+        //read week budget from config
+         int budget = LuxuryCalculatorMain.dataManager.getBudgetConfig();
 
         //display remaining budget for current week
         remainingBudgetOutputField.setText(IOHandler.buildMoneyOutput(budget - expenses));

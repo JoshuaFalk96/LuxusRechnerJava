@@ -33,7 +33,7 @@ abstract class DataManager {
 
     abstract void setWeekFormatConfig(WeekFormat format);
 
-    abstract void setSaveExpensesConfig(boolean saveExpenses);
+    abstract void setSaveExpensesConfig(boolean isSaveExpenses);
 
-    abstract void setPartBudgetConfig(boolean partBudget);
+    abstract void setPartBudgetConfig(boolean isPartBudget);
 }
