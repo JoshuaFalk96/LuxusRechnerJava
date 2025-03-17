@@ -56,7 +56,7 @@ public class ExpensesViewController extends SubViewController {
 
         //informs user that expenses and budget have been reset
         VBox.setMargin(budgetLabelVbox, new Insets(0, 0, -10, 0));
-        budgetResetLabel.setText(IOHandler.BUDGETRESET);
+        budgetResetLabel.setText(IOHandler.BUDGET_RESET);
         //updates current budget field to total budget as expenses are 0
         currentBudgetOutput.setText(IOHandler.buildMoneyOutput(totalBudget));
     }

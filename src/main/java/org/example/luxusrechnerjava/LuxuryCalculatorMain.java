@@ -12,7 +12,7 @@ public class LuxuryCalculatorMain extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(LuxuryCalculatorMain.class.getResource("MainView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Luxusrechner");
+        stage.setTitle(IOHandler.MAIN_TITLE);
         stage.setScene(scene);
         stage.show();
     }

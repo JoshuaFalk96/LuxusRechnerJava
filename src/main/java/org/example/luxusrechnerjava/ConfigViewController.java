@@ -36,11 +36,11 @@ public class ConfigViewController extends SubViewController {
     public void initialize() {
         super.initialize();
         //add tooltips to info buttons
-        addTooltip(budgetInfoButton, IOHandler.BUDGETINFO);
-        addTooltip(resetCycleInfoButton, IOHandler.CYCLELENGTHINFO);
-        addTooltip(weekFormatInfoButton, IOHandler.WEEKFORMATINFO);
-        addTooltip(saveExpensesInfoButton, IOHandler.SAVEEXPENESINFO);
-        addTooltip(partWeekInfoButton, IOHandler.PARTBUDGETINFO);
+        addTooltip(budgetInfoButton, IOHandler.BUDGET_INFO);
+        addTooltip(resetCycleInfoButton, IOHandler.CYCLE_LENGTH_INFO);
+        addTooltip(weekFormatInfoButton, IOHandler.WEEK_FORMAT_INFO);
+        addTooltip(saveExpensesInfoButton, IOHandler.SAVE_EXPENSES_INFO);
+        addTooltip(partWeekInfoButton, IOHandler.PART_BUDGET_INFO);
         //output current values to input fields
         //TODO read current values for budget and cycleLength
         budget = (int)(Math.random() * 2000 + 9000); //placeholder

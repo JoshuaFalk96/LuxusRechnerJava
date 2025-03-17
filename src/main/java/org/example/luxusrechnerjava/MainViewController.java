@@ -73,19 +73,18 @@ public class MainViewController {
 
         //output information text to confirm action
         VBox.setMargin(dateResetVbox, new Insets(0, 0, -10, 0));
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        dateResetLabel.setText("Anfang des Zeitraums gesetzt auf den " + date.format(formatter));
+        dateResetLabel.setText(IOHandler.buildNewDateOutput(date));
     }
 
     public void onClickCalculatorButton(ActionEvent actionEvent) {
-        openView("CalculatorView.fxml", "Luxusrechner - Berechnen");
+        openView("CalculatorView.fxml", IOHandler.CALCULATOR_TITLE);
     }
 
     public void onClickExpensesButton(ActionEvent actionEvent) {
-        openView("ExpensesView.fxml", "Luxusrechner - Ausgaben");
+        openView("ExpensesView.fxml", IOHandler.EXPENSES_TITLE);
     }
 
     public void onClickConfigButton(ActionEvent actionEvent) {
-        openView("ConfigView.fxml", "Luxusrechner - Einstellungen");
+        openView("ConfigView.fxml", IOHandler.CONFIG_TITLE);
     }
 }
