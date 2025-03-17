@@ -72,7 +72,7 @@ public class ExpensesViewController extends SubViewController {
     public void onClickAddButton(ActionEvent actionEvent) {
         resetInfoLabels();
         //get input as int
-        Integer newExpenses = IOHandler.parseInteger(expensesInputField.getText(), newExpenseLabel);
+        Integer newExpenses = IOHandler.parseMoneyInput(expensesInputField.getText(), newExpenseLabel);
         if (newExpenses == null) {
             //inputs are not set correctly
             //adjust spacing to show error label

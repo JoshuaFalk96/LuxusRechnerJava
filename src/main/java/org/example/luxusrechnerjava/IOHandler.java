@@ -22,7 +22,7 @@ public class IOHandler {
     private static final String SUB_CURRENCY_DIVIDER = ","; //language dependent
     private static final int CURRENCY_CONVERSION_FACTOR = 100; //for currencies with smaller currency like Euro and Cent, 1 otherwise
     private static final String INPUT_EMPTY = "Input Notwendig";
-    private static final String INPUT_NOT_INT = "Keine korrekte ganze Zahl eingegeben";
+    private static final String INPUT_NOT_INT = "Keine korrekte Zahl eingegeben";
     private static final String REMAINING_DAYS_1 = " und ";
     private static final String REMAINING_DAYS_2 = " Tage";
     private static final String REMAINING_WEEKS_1 = "Noch ";
@@ -41,25 +41,13 @@ public class IOHandler {
      * @param errorOutput Output for error message
      * @return input as integer if parsable, null otherwise
      */
-    public static Integer parseInteger(String input, Labeled errorOutput) {
+    public static Integer parseIntegerInput(String input, Labeled errorOutput) {
         //check if input is empty
         if (input.isBlank()) {
             errorOutput.setText(INPUT_EMPTY);
             return null;
         }
-        int localCurrencyConvergionFactor = CURRENCY_CONVERSION_FACTOR;
-        if (CURRENCY_CONVERSION_FACTOR != 1) {
-            //currency has smaller fraction currency, e.g. Euro and Cent
-            if (input.contains(",") || input.contains(".")) {
-                //input contains currency fraction, e.g. Cent for Euro
-                //removes dividing characters to be valid integer
-                input = input.replace(",", "");
-                input = input.replace(".", "");
-                //after removing divider, input already in smaller currency
-                localCurrencyConvergionFactor = 1;
-            }
-        }
-        //read input Field for balance and convert to integer
+        //parse input to integer
         int output;
         try {
             output = Integer.parseInt(input);
@@ -68,8 +56,32 @@ public class IOHandler {
             errorOutput.setText(INPUT_NOT_INT);
             return null;
         }
-        //converts input to smaller currency for internal processing
-        return output * localCurrencyConvergionFactor;
+        return output;
+    }
+
+    public static Integer parseMoneyInput(String input, Labeled errorOutput) {
+        //input may need to be transformed to the smaller unit of currency or not depending on input
+        //so local changeable conversion factor is needed
+        int localCurrencyConvergionFactor = CURRENCY_CONVERSION_FACTOR;
+        if (CURRENCY_CONVERSION_FACTOR != 1) {
+            //currency has smaller fraction currency, e.g. Euro and Cent
+            if (input.contains(",") || input.contains(".")) {
+                //input contains currency fraction, e.g. Cent for Euro
+                //removes dividing characters to be valid integer
+                input = input.replace(",", "");
+                input = input.replace(".", "");
+                //after removing divider, input already in smaller currency unit
+                localCurrencyConvergionFactor = 1;
+            }
+        }
+        Integer output = parseIntegerInput(input, errorOutput);
+        if (output == null) {
+            //forwards null as error value for invalid input
+            return null;
+        } else {
+            //convert input to smaller currency unit for internal processing
+            return output * localCurrencyConvergionFactor;
+        }
     }
 
     public static String buildRemainingTimeOutput(int weeks, int days) {

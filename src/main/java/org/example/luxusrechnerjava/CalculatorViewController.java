@@ -64,11 +64,11 @@ public class CalculatorViewController extends SubViewController {
     public void onClickCalculateButton(ActionEvent actionEvent) {
         resetErrorLabels();
         //get input as int
-        Integer balance = IOHandler.parseInteger(balanceInputField.getText(), balanceErrorLabel);
+        Integer balance = IOHandler.parseMoneyInput(balanceInputField.getText(), balanceErrorLabel);
         //expenses input only exists if expenses not saved
         if (!saveExpenses) {
             //get input as int
-            expenses = IOHandler.parseInteger(expensesInputField.getText(), expensesErrorLabel);
+            expenses = IOHandler.parseMoneyInput(expensesInputField.getText(), expensesErrorLabel);
         } //no else case as saved expenses already read in initialize methode
         if (balance == null || expenses == null) return; //inputs are not set correctly
 
