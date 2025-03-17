@@ -3,6 +3,7 @@ package org.example.luxusrechnerjava;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.util.Duration;
+import org.example.luxusrechnerjava.DataManager.WeekFormat;
 
 public class ConfigViewController extends SubViewController {
     public Button budgetInfoButton;
@@ -25,11 +26,6 @@ public class ConfigViewController extends SubViewController {
     private int budget;
     private int cycleLength;
 
-    //TODO move enum declaration to dataManager
-    enum WeekFormat {
-        MO_TO_SO,
-        SEVEN_DAYS
-    }
 
     private void addTooltip(Control target, String text) {
         Tooltip tooltip = new Tooltip(text);
@@ -56,7 +52,7 @@ public class ConfigViewController extends SubViewController {
 
         //highlight buttons for current config
         //TODO read weekFormat, saveExpenses and partBudget from config
-        WeekFormat weekFormat = (Math.random() > 0.5) ? WeekFormat.MO_TO_SO: WeekFormat.SEVEN_DAYS; //placeholder
+        WeekFormat weekFormat = (Math.random() > 0.5) ? WeekFormat.MO_TO_SO : WeekFormat.SEVEN_DAYS; //placeholder
         boolean saveExpenses = (Math.random() > 0.5); //placeholder
         boolean partBudget = (Math.random() > 0.5); //placeholder
 
