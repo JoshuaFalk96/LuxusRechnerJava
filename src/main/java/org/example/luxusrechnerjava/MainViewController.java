@@ -26,9 +26,9 @@ public class MainViewController {
 
     public void initialize() {
         //set the date picker to have today's date as default
-        datePicker.setValue(LocalDate.now());
+        datePicker.setValue(DateManager.getToday());
         //read saveExpenses from config
-        boolean saveExpenses = LuxuryCalculatorMain.dataManager.getSaveExpensesConfig();
+        boolean saveExpenses = Main.dataManager.getSaveExpensesConfig();
         if (!saveExpenses) {
             //disable accesses to expensesView if not saving expenses
             expensesButton.setDisable(true);
@@ -66,7 +66,7 @@ public class MainViewController {
     public void onClickConfirmButton(ActionEvent actionEvent) {
         LocalDate date = datePicker.getValue();
         //save the new date as reset date in memory
-        LuxuryCalculatorMain.dataManager.setResetDate(date);
+        Main.dataManager.setResetDate(date);
         //output information text to confirm action
         VBox.setMargin(dateResetVbox, new Insets(0, 0, -10, 0));
         dateResetLabel.setText(IOHandler.buildNewDateOutput(date));

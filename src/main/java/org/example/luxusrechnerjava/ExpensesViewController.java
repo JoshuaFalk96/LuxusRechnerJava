@@ -23,9 +23,9 @@ public class ExpensesViewController extends SubViewController {
     public void initialize() {
         super.initialize();
         //read saved week budget from config
-        totalBudget = LuxuryCalculatorMain.dataManager.getBudgetConfig();
+        totalBudget = Main.dataManager.getBudgetConfig();
         //read currently saved expenses
-        savedExpenses = LuxuryCalculatorMain.dataManager.getSavedExpenses();
+        savedExpenses = Main.dataManager.getSavedExpenses();
         //displays currently remaining budget before new expense is added
         currentBudgetOutput.setText(IOHandler.buildMoneyOutput(totalBudget - savedExpenses));
     }
@@ -51,7 +51,7 @@ public class ExpensesViewController extends SubViewController {
         //set local saved expenses
         savedExpenses = 0;
         //write expenses = 0 to memory
-        LuxuryCalculatorMain.dataManager.setSavedExpenses(0);
+        Main.dataManager.setSavedExpenses(0);
         //informs user that expenses and budget have been reset
         VBox.setMargin(budgetLabelVbox, new Insets(0, 0, -10, 0));
         budgetResetLabel.setText(IOHandler.BUDGET_RESET);
@@ -80,7 +80,7 @@ public class ExpensesViewController extends SubViewController {
         //adjusts local saved expenses
         savedExpenses = savedExpenses + newExpenses;
         //write new expenses to storage
-        LuxuryCalculatorMain.dataManager.setSavedExpenses(savedExpenses);
+        Main.dataManager.setSavedExpenses(savedExpenses);
         //informs user that expense of input amount has been added to saved value
         VBox.setMargin(newExpenseVBox, new Insets(0, 0, -10, 0));
         newExpenseLabel.setText(IOHandler.buildNexExpensesOutput(newExpenses));
