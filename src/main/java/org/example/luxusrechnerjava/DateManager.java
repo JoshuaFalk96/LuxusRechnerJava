@@ -48,6 +48,7 @@ public class DateManager {
                 case SUNDAY -> daysToWeekEnd = 0;
             }
         }
+        //if daysToWeekEnd == 0 input is end of week
         if (daysToWeekEnd == 0) return dateInWeek;
         return dateInWeek.plusDays(daysToWeekEnd);
     }
@@ -56,11 +57,14 @@ public class DateManager {
      * Based on reset date and cycle length config
      * determines date at which the cycle ends
      *
-     * @return LocalDate object for teh date the cycle ends
+     * @return LocalDate object for the date the cycle ends
      */
     static LocalDate getEndOfCycleDate() {
-        //TODO write logic
-        return null; //placeholder
+        //get reset date and cycle length from config
+        LocalDate resetDate = Main.dataManager.getResetDate();
+        int cycleLength = Main.dataManager.getCycleLengthConfig();
+        //end of cycle date ist cycle length days after reset date
+        return resetDate.plusDays(cycleLength);
     }
 
     /**
