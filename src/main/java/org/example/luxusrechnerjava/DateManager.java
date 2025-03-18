@@ -1,6 +1,8 @@
 package org.example.luxusrechnerjava;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 public class DateManager {
     /**
@@ -22,8 +24,32 @@ public class DateManager {
      * @return LocalDate object for date at the end of given week
      */
     static LocalDate getEndOfWeekDate(LocalDate dateInWeek) {
-        //TODO write logic
-        return null; //placeholder
+        //read the week format from config
+        DataManager.WeekFormat weekFormat = Main.dataManager.getWeekFormatConfig();
+        int daysToWeekEnd = 7;
+        if (weekFormat == DataManager.WeekFormat.SEVEN_DAYS) {
+            //week is defined as 7-day intervals starting reset day
+            LocalDate resetDate = Main.dataManager.getResetDate();
+            //get days from reset day to input date
+            int daysSinceReset = (int) resetDate.until(dateInWeek, ChronoUnit.DAYS);
+            //remove full 7-day intervals and subtract passed days in current week
+            daysToWeekEnd = 6 - (daysSinceReset % 7);
+        } else {
+            //week is defined as Monday to Sunday
+            DayOfWeek dayOfWeek = dateInWeek.getDayOfWeek();
+            //depending on day of week how many days til sunday
+            switch (dayOfWeek) {
+                case MONDAY -> daysToWeekEnd = 6;
+                case TUESDAY -> daysToWeekEnd = 5;
+                case WEDNESDAY -> daysToWeekEnd = 4;
+                case THURSDAY -> daysToWeekEnd = 3;
+                case FRIDAY -> daysToWeekEnd = 2;
+                case SATURDAY -> daysToWeekEnd = 1;
+                case SUNDAY -> daysToWeekEnd = 0;
+            }
+        }
+        if (daysToWeekEnd == 0) return dateInWeek;
+        return dateInWeek.plusDays(daysToWeekEnd);
     }
 
     /**
