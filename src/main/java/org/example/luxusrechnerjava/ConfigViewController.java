@@ -23,8 +23,6 @@ public class ConfigViewController extends SubViewController {
     public Button partWeekFullBudgetButton;
     public Label budgetErrorLabel;
     public Label cycleErrorLabel;
-    private int budget;
-    private int cycleLength;
 
 
     private void addTooltip(Control target, String text) {
@@ -44,8 +42,8 @@ public class ConfigViewController extends SubViewController {
         addTooltip(partWeekInfoButton, IOHandler.PART_BUDGET_INFO);
 
         //read current values for budget and cycleLength
-        budget = LuxuryCalculatorMain.dataManager.getBudgetConfig();
-        cycleLength = LuxuryCalculatorMain.dataManager.getCycleLengthConfig();
+        int budget = LuxuryCalculatorMain.dataManager.getBudgetConfig();
+        int cycleLength = LuxuryCalculatorMain.dataManager.getCycleLengthConfig();
         //output current values to input fields
         budgetInputField.setPromptText(IOHandler.buildBudgetOutput(budget));
         cycleInputField.setPromptText(IOHandler.buildCycleOutput(cycleLength));
@@ -88,62 +86,70 @@ public class ConfigViewController extends SubViewController {
         //read new budget from input field
         Integer newBudget = IOHandler.parseMoneyInput(budgetInputField.getText(), budgetErrorLabel);
         if (newBudget == null) return; //input was empty or not parsable
-        //save the new budget
-        budget = newBudget;
-        //TODO save new budget to config
-
+        //save new budget to config
+        LuxuryCalculatorMain.dataManager.setBudgetConfig(newBudget);
         //empty budget input field and display new budget
         budgetInputField.setText("");
-        budgetInputField.setPromptText(IOHandler.buildBudgetOutput(budget));
+        budgetInputField.setPromptText(IOHandler.buildBudgetOutput(newBudget));
     }
 
     public void onClickResetCycleConfirmButton(ActionEvent actionEvent) {
         resetErrorLabels();
         //read new length of cycle from input field
-        Integer newCycle = IOHandler.parseIntegerInput(cycleInputField.getText(), cycleErrorLabel);
-        if (newCycle == null) return; //input was empty or not parsable
-        //save new cycle length
-        cycleLength = newCycle;
-        //TODO save new cycle length to config
-
+        Integer newCycleLength = IOHandler.parseIntegerInput(cycleInputField.getText(), cycleErrorLabel);
+        if (newCycleLength == null) return; //input was empty or not parsable
+        //save new cycle length to config
+        LuxuryCalculatorMain.dataManager.setCycleLengthConfig(newCycleLength);
         //empty cycle input and display new cycle length
         cycleInputField.setText("");
-        cycleInputField.setPromptText(IOHandler.buildCycleOutput(cycleLength));
+        cycleInputField.setPromptText(IOHandler.buildCycleOutput(newCycleLength));
     }
 
     public void onClickWeekFormatMoSoButton(ActionEvent actionEvent) {
+        //set MoToSo as highlighted Button
         weekFormatMoSoButton.setStyle("-fx-opacity:1.0");
         weekFormat7DaysButton.setStyle("-fx-opacity:0.5");
-        //TODO save MO_TO_SO to config for weekFormat
+        //save MO_TO_SO to config for weekFormat
+        LuxuryCalculatorMain.dataManager.setWeekFormatConfig(WeekFormat.MO_TO_SO);
     }
 
     public void onClickWeekFormat7DaysButton(ActionEvent actionEvent) {
+        //set 7Days as highlighted button
         weekFormatMoSoButton.setStyle("-fx-opacity:0.5");
         weekFormat7DaysButton.setStyle("-fx-opacity:1.0");
-        //TODO save SEVEN_DAYS to config for weekFormat
+        //save SEVEN_DAYS to config for weekFormat
+        LuxuryCalculatorMain.dataManager.setWeekFormatConfig(WeekFormat.SEVEN_DAYS);
     }
 
     public void onClickSaveExpensesYesButton(ActionEvent actionEvent) {
+        //set Yes as highlighted button
         saveExpensesYesButton.setStyle("-fx-opacity:1.0");
         saveExpensesNoButton.setStyle("-fx-opacity:0.5");
-        //TODO save true to config for saveExpenses
+        //save true to config for saveExpenses
+        LuxuryCalculatorMain.dataManager.setSaveExpensesConfig(true);
     }
 
     public void onClickSaveExpensesNoButton(ActionEvent actionEvent) {
+        //set No as highlighted button
         saveExpensesYesButton.setStyle("-fx-opacity:0.5");
         saveExpensesNoButton.setStyle("-fx-opacity:1.0");
-        //TODO save false to config for saveExpenses
+        //save false to config for saveExpenses
+        LuxuryCalculatorMain.dataManager.setSaveExpensesConfig(false);
     }
 
     public void onClickPartWeekPartBudgetButton(ActionEvent actionEvent) {
+        //set partBudget as highlighted button
         partWeekPartBudgetButton.setStyle("-fx-opacity:1.0");
         partWeekFullBudgetButton.setStyle("-fx-opacity:0.5");
-        //TODO save true to config for partBudget
+        //save true to config for partBudget
+        LuxuryCalculatorMain.dataManager.setPartBudgetConfig(true);
     }
 
     public void onClickPartWeekFullBudgetButton(ActionEvent actionEvent) {
+        //set fullBudget as highlighted button
         partWeekPartBudgetButton.setStyle("-fx-opacity:0.5");
         partWeekFullBudgetButton.setStyle("-fx-opacity:1.0");
-        //TODO save false to config for partBudget
+        //save false to config for partBudget
+        LuxuryCalculatorMain.dataManager.setPartBudgetConfig(false);
     }
 }

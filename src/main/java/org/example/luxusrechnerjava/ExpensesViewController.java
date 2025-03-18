@@ -22,12 +22,10 @@ public class ExpensesViewController extends SubViewController {
     @Override
     public void initialize() {
         super.initialize();
-        //TODO read saved week budget from config
-        totalBudget = 10000; //placeholder
-
-        //TODO read currently saved expenses
-        savedExpenses = (int) (Math.random() * 5000); //placeholder
-
+        //read saved week budget from config
+        totalBudget = LuxuryCalculatorMain.dataManager.getBudgetConfig();
+        //read currently saved expenses
+        savedExpenses = LuxuryCalculatorMain.dataManager.getSavedExpenses();
         //displays currently remaining budget before new expense is added
         currentBudgetOutput.setText(IOHandler.buildMoneyOutput(totalBudget - savedExpenses));
     }
@@ -52,8 +50,8 @@ public class ExpensesViewController extends SubViewController {
         resetInfoLabels();
         //set local saved expenses
         savedExpenses = 0;
-        //TODO write expenses = 0 to memory
-
+        //write expenses = 0 to memory
+        LuxuryCalculatorMain.dataManager.setSavedExpenses(0);
         //informs user that expenses and budget have been reset
         VBox.setMargin(budgetLabelVbox, new Insets(0, 0, -10, 0));
         budgetResetLabel.setText(IOHandler.BUDGET_RESET);
@@ -81,13 +79,11 @@ public class ExpensesViewController extends SubViewController {
         }
         //adjusts local saved expenses
         savedExpenses = savedExpenses + newExpenses;
-
-        //TODO write new expenses to storage
-
+        //write new expenses to storage
+        LuxuryCalculatorMain.dataManager.setSavedExpenses(savedExpenses);
         //informs user that expense of input amount has been added to saved value
         VBox.setMargin(newExpenseVBox, new Insets(0, 0, -10, 0));
         newExpenseLabel.setText(IOHandler.buildNexExpensesOutput(newExpenses));
-
         //sets the current budget output to new value after adding new expenses
         currentBudgetOutput.setText(IOHandler.buildMoneyOutput(totalBudget - savedExpenses));
     }

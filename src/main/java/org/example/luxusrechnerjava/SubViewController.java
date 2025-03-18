@@ -13,6 +13,7 @@ public abstract class SubViewController {
     public Button returnButton;
 
     public void initialize() {
+        //set default focus on return button
         Platform.runLater(() -> returnButton.requestFocus());
     }
 
@@ -27,7 +28,7 @@ public abstract class SubViewController {
             Stage stage = (Stage) returnButton.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(SubViewController.class.getResource("MainView.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
-            stage.setTitle("Luxusrechner");
+            stage.setTitle(IOHandler.MAIN_TITLE);
             stage.setScene(scene);
             stage.sizeToScene();
         } catch (IOException e) {
