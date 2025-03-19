@@ -25,8 +25,8 @@ public class MainViewController {
     public Label expensesInfoLabel1;
 
     public void initialize() {
-        //set the date picker to have today's date as default
-        datePicker.setValue(DateManager.getToday());
+        //set the date picker to have reset date as default value
+        datePicker.setValue(Main.dataManager.getResetDate());
         //read saveExpenses from config
         boolean saveExpenses = Main.dataManager.getSaveExpensesConfig();
         if (!saveExpenses) {
