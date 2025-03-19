@@ -6,14 +6,14 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Properties;
 
-public class FileManager extends DataManager{
+public class FileDataManager extends DataManager{
     private final Properties config;
     private final FileWriter configWriter;
 
     /**
      * initializes with default values
      */
-    FileManager(String configFilePath) throws IOException {
+    FileDataManager(String configFilePath) throws IOException {
         config = new Properties();
         configWriter = new FileWriter(configFilePath);
         config.load(new FileInputStream(configFilePath));

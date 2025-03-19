@@ -5,7 +5,7 @@ import java.time.LocalDate;
 /**
  * Implementation of DataManger only saving in working memory, resets every time
  */
-public class RAMManager extends DataManager {
+public class RAMDataManager extends DataManager {
     private LocalDate resetDate;
     private int savedExpenses;
     private int budget;
@@ -17,7 +17,7 @@ public class RAMManager extends DataManager {
     /**
      * initializes with default values
      */
-    RAMManager() {
+    RAMDataManager() {
         this.resetDate = LocalDate.now();
         this.savedExpenses = 1245;
         this.budget = 10000;
@@ -37,7 +37,7 @@ public class RAMManager extends DataManager {
      * @param saveExpenses Should expenses be saved
      * @param partBudget Should not full weeks get are smaller budget
      */
-    RAMManager(LocalDate resetDate, int savedExpenses, int budget, int cycleLength, WeekFormat weekFormat, boolean saveExpenses, boolean partBudget) {
+    RAMDataManager(LocalDate resetDate, int savedExpenses, int budget, int cycleLength, WeekFormat weekFormat, boolean saveExpenses, boolean partBudget) {
         this.resetDate = resetDate;
         this.savedExpenses = savedExpenses;
         this.budget = budget;

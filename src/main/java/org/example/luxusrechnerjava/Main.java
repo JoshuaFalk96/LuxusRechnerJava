@@ -12,7 +12,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        dataManager = new FileManager(Main.class.getResource("config.properties").getPath());
+        dataManager = new FileDataManager(Main.class.getResource("config.properties").getPath());
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("MainView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle(IOHandler.MAIN_TITLE);
