@@ -9,8 +9,10 @@ import java.io.IOException;
 
 public class Main extends Application {
     static DataManager dataManager;
+
     @Override
     public void start(Stage stage) throws IOException {
+        dataManager = new FileManager(Main.class.getResource("config.properties").getPath());
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("MainView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle(IOHandler.MAIN_TITLE);
@@ -19,7 +21,6 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        dataManager = new RAMManager();
         launch();
     }
 }
