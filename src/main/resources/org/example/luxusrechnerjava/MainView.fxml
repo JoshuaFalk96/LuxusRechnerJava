@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="360.0" prefWidth="540.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.luxusrechnerjava.MainViewController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="360.0" prefWidth="540.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="120.0">
+               <children>
+                  <Button fx:id="calculatorButton" alignment="CENTER" mnemonicParsing="false" onAction="#onClickCalculatorButton" prefWidth="130.0" text="Luxusgeld berechnen" />
+                  <Pane prefWidth="130.0" />
+                  <VBox alignment="CENTER" prefWidth="130.0">
+                     <children>
+                        <Button fx:id="expensesButton" alignment="CENTER" mnemonicParsing="false" onAction="#onClickExpensesButton" prefWidth="130.0" text="Ausgabe angeben" />
+                        <Label fx:id="expensesInfoLabel1" text="Ausgaben werden momentan" visible="false">
+                           <VBox.margin>
+                              <Insets left="-20.0" right="-20.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="expensesInfoLabel2" text="nicht gespeichert" visible="false">
+                           <VBox.margin>
+                              <Insets bottom="-34.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            <VBox alignment="CENTER" fillWidth="false" prefHeight="120.0" spacing="10.0">
+               <children>
+                  <VBox fx:id="dateResetVbox" alignment="CENTER">
+                     <children>
+                        <Label alignment="CENTER" text="Zahlungseingang am :" textAlignment="CENTER" />
+                        <Label fx:id="dateResetLabel" alignment="CENTER" prefWidth="300.0" textAlignment="CENTER" textFill="#fc0000" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="-20.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <DatePicker fx:id="datePicker" prefWidth="130.0" promptText="Datum auswählen" />
+                  <Button fx:id="confirmButton" alignment="CENTER" mnemonicParsing="false" onAction="#onClickConfirmButton" prefWidth="130.0" text="Bestätigen" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="120.0">
+               <children>
+                  <Button fx:id="configButton" alignment="CENTER" mnemonicParsing="false" onAction="#onClickConfigButton" prefWidth="130.0" text="Einstellungen" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
