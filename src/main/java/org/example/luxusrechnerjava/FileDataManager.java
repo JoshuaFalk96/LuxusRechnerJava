@@ -18,6 +18,7 @@ public class FileDataManager extends DataManager {
     private final String WEEK_FORMAT_NAME = "weekFormat";
     private final String SAVE_EXPENSES_CONFIG_NAME = "saveExpensesConfig";
     private final String PART_BUDGET_NAME = "partBudget";
+    private final String STORE_COMMENT = "Einstellungen von Luxus Rechner";
 
     /**
      * initializes with default values
@@ -34,12 +35,11 @@ public class FileDataManager extends DataManager {
             config.setProperty(WEEK_FORMAT_NAME, WeekFormat.MO_TO_SO.toString());
             config.setProperty(SAVE_EXPENSES_CONFIG_NAME, String.valueOf(true));
             config.setProperty(PART_BUDGET_NAME, String.valueOf(false));
-            configFileWriter = new FileWriter(configFilePath.toString());
-            config.store(configFileWriter, null);
         } else {
             config.load(new FileInputStream(configFilePath.toString()));
-            configFileWriter = new FileWriter(configFilePath.toString());
         }
+        configFileWriter = new FileWriter(configFilePath.toString());
+        config.store(configFileWriter, STORE_COMMENT);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class FileDataManager extends DataManager {
     void setResetDate(LocalDate resetDate) {
         try {
             config.setProperty(RESET_DATE_NAME, resetDate.toString());
-            config.store(configFileWriter, null);
+            config.store(configFileWriter, STORE_COMMENT);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -91,7 +91,7 @@ public class FileDataManager extends DataManager {
     void setSavedExpenses(int expenses) {
         try {
             config.setProperty(SAVED_EXPENSES_NAME, String.valueOf(expenses));
-            config.store(configFileWriter, null);
+            config.store(configFileWriter, STORE_COMMENT);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -101,7 +101,7 @@ public class FileDataManager extends DataManager {
     void setBudgetConfig(int budget) {
         try {
             config.setProperty(BUDGET_NAME, String.valueOf(budget));
-            config.store(configFileWriter, null);
+            config.store(configFileWriter, STORE_COMMENT);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -111,7 +111,7 @@ public class FileDataManager extends DataManager {
     void setCycleLengthConfig(int days) {
         try {
             config.setProperty(CYCLE_LENGTH_NAME, String.valueOf(days));
-            config.store(configFileWriter, null);
+            config.store(configFileWriter, STORE_COMMENT);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -121,7 +121,7 @@ public class FileDataManager extends DataManager {
     void setWeekFormatConfig(WeekFormat format) {
         try {
             config.setProperty(WEEK_FORMAT_NAME, format.toString());
-            config.store(configFileWriter, null);
+            config.store(configFileWriter, STORE_COMMENT);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -131,7 +131,7 @@ public class FileDataManager extends DataManager {
     void setSaveExpensesConfig(boolean isSaveExpenses) {
         try {
             config.setProperty(SAVE_EXPENSES_CONFIG_NAME, String.valueOf(isSaveExpenses));
-            config.store(configFileWriter, null);
+            config.store(configFileWriter, STORE_COMMENT);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -141,7 +141,7 @@ public class FileDataManager extends DataManager {
     void setPartBudgetConfig(boolean isPartBudget) {
         try {
             config.setProperty(PART_BUDGET_NAME, String.valueOf(isPartBudget));
-            config.store(configFileWriter, null);
+            config.store(configFileWriter, STORE_COMMENT);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

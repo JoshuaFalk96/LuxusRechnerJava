@@ -10,7 +10,7 @@ public class LuxuryCalculator {
      */
     private static int calculateFullWeeksBudget(int daysToConsider) {
         //read week budget from config
-        int budget = Main.dataManager.getBudgetConfig();
+        int budget = App.dataManager.getBudgetConfig();
         //determine how many full weeks are in the time-span
         int fullWeeks = daysToConsider / 7;
         return fullWeeks * budget;
@@ -31,9 +31,9 @@ public class LuxuryCalculator {
         //if no days remain the time-span only contains full weeks and partial budget is not needed
         if (days == 0) return 0;
         //read week budget from config
-        int budget = Main.dataManager.getBudgetConfig();
+        int budget = App.dataManager.getBudgetConfig();
         //read from config of part budgets are used
-        boolean partBudget = Main.dataManager.getPartBudgetConfig();
+        boolean partBudget = App.dataManager.getPartBudgetConfig();
         int partialBudget = 0;
         if (partBudget) {
             //config is set to allocate partial budget based on remaining days
@@ -62,7 +62,7 @@ public class LuxuryCalculator {
         //get the budget for the partial week at end of remaining days if existing
         int partWeekBudget = calculatePartBudget(daysToCycleEnd);
         //get budget for a single week from config
-        int budget = Main.dataManager.getBudgetConfig();
+        int budget = App.dataManager.getBudgetConfig();
         //calculate the remaining budget for the current week
         int currentBudget = budget - expenses;
         //subtract all reserved Budgets from balance to determine how much cna be used for luxuries

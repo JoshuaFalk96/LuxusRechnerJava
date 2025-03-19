@@ -26,9 +26,9 @@ public class MainViewController {
 
     public void initialize() {
         //set the date picker to have reset date as default value
-        datePicker.setValue(Main.dataManager.getResetDate());
+        datePicker.setValue(App.dataManager.getResetDate());
         //read saveExpenses from config
-        boolean saveExpenses = Main.dataManager.getSaveExpensesConfig();
+        boolean saveExpenses = App.dataManager.getSaveExpensesConfig();
         if (!saveExpenses) {
             //disable accesses to expensesView if not saving expenses
             expensesButton.setDisable(true);
@@ -66,7 +66,7 @@ public class MainViewController {
     public void onClickConfirmButton(ActionEvent actionEvent) {
         LocalDate date = datePicker.getValue();
         //save the new date as reset date in memory
-        Main.dataManager.setResetDate(date);
+        App.dataManager.setResetDate(date);
         //output information text to confirm action
         VBox.setMargin(dateResetVbox, new Insets(0, 0, -10, 0));
         dateResetLabel.setText(IOHandler.buildNewDateOutput(date));

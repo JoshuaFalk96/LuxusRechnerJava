@@ -90,7 +90,7 @@ public class IOHandler {
     public static String buildRemainingTimeOutput(int totalDays) {
         int weeks = totalDays / 7;
         int days = totalDays % 7;
-        boolean partWeek = Main.dataManager.getPartBudgetConfig();
+        boolean partWeek = App.dataManager.getPartBudgetConfig();
         if (!partWeek && days != 0) {
             //if partial weeks are treated as full weeks and a partial week exists
             //add partial week as full week
