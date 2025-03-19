@@ -25,9 +25,10 @@ public class CalculatorViewController extends SubViewController {
     @Override
     public void initialize() {
         super.initialize();
-        //TODO replace with real calculation for dates
-        int remainingWeeks = (int) (Math.random() * 4);//placeholder
-        int remainingDays = (int) (Math.random() * 8);//placeholder
+        //calculate how many days are left til end of cycle
+        int remainingCycleLength = DateManager.getDaysToCycleEnd(DateManager.getToday());
+        int remainingWeeks = remainingCycleLength / 7;
+        int remainingDays = remainingCycleLength % 7;
 
         //displaying remaining time till next planed reset
         remainingTimeLabel.setText(IOHandler.buildRemainingTimeOutput(remainingWeeks,remainingDays));
@@ -72,8 +73,8 @@ public class CalculatorViewController extends SubViewController {
         } //no else case as saved expenses already read in initialize methode
         if (balance == null || expenses == null) return; //inputs are not set correctly
 
-        //TODO call calculator
-        int luxuryMoney = balance; //placeholder
+        //call calculator to determine luxury budget
+        int luxuryMoney = LuxuryCalculator.calculateLuxuryMoney(balance, expenses);
 
         //read week budget from config
          int budget = Main.dataManager.getBudgetConfig();
