@@ -26,12 +26,9 @@ public class CalculatorViewController extends SubViewController {
     public void initialize() {
         super.initialize();
         //calculate how many days are left til end of cycle
-        int remainingCycleLength = DateManager.getDaysToCycleEnd(DateManager.getToday());
-        int remainingWeeks = remainingCycleLength / 7;
-        int remainingDays = remainingCycleLength % 7;
-
+        int remainingCycleLength = DateManager.getDaysToCycleEnd(DateManager.getEndOfWeekDate(DateManager.getToday()));
         //displaying remaining time till next planed reset
-        remainingTimeLabel.setText(IOHandler.buildRemainingTimeOutput(remainingWeeks,remainingDays));
+        remainingTimeLabel.setText(IOHandler.buildRemainingTimeOutput(remainingCycleLength));
 
         //read config for saveExpenses
         saveExpenses = Main.dataManager.getSaveExpensesConfig();

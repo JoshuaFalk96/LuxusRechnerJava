@@ -64,7 +64,8 @@ public class DateManager {
         LocalDate resetDate = Main.dataManager.getResetDate();
         int cycleLength = Main.dataManager.getCycleLengthConfig();
         //end of cycle date ist cycle length days after reset date
-        return resetDate.plusDays(cycleLength);
+        //-1 to consider current reset as inclusive and next reset date as exclusive
+        return resetDate.plusDays(cycleLength -1 );
     }
 
     /**
