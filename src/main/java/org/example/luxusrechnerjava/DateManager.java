@@ -74,7 +74,6 @@ public class DateManager {
      * @return Days to end of cycle
      */
     static int getDaysToCycleEnd(LocalDate date) {
-        //TODO write logic
-        return 0; //placeholder
+        return (int)date.until(getEndOfCycleDate(), ChronoUnit.DAYS);
     }
 }
