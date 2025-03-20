@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class App extends Application {
@@ -13,7 +15,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        dataManager = new FileDataManager(Paths.get("config.properties"));
+        Path configPath = Paths.get(System.getProperty("user.home"),"LuxuryCalculator/config.properties");
+        dataManager = new FileDataManager(configPath);
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("MainView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle(IOHandler.MAIN_TITLE);

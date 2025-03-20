@@ -25,8 +25,9 @@ public class FileDataManager extends DataManager {
      */
     FileDataManager(Path configFilePath) throws IOException {
         config = new Properties();
-        if (!Files.exists(configFilePath)) {
+        if (Files.notExists(configFilePath)) {
             //config file does not exist then create file with default values
+            Files.createDirectories(configFilePath.getParent());
             Files.createFile(configFilePath);
             config.setProperty(RESET_DATE_NAME, LocalDate.now().toString());
             config.setProperty(SAVED_EXPENSES_NAME, String.valueOf(1245));
