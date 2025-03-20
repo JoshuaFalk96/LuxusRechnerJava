@@ -70,10 +70,10 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>org.example.luxusrechnerjava/org.example.luxusrechnerjava.Main</mainClass>
-              <launcher>app</launcher>
-              <jlinkZipName>app</jlinkZipName>
-              <jlinkImageName>app</jlinkImageName>
+              <mainClass>org.example.luxusrechnerjava/org.example.luxusrechnerjava.App</mainClass>
+              <launcher>LuxuryCalculator</launcher>
+              <jlinkZipName>LuxuryCalculator</jlinkZipName>
+              <jlinkImageName>LuxuryCalculator</jlinkImageName>
               <noManPages>true</noManPages>
               <stripDebug>true</stripDebug>
               <noHeaderFiles>true</noHeaderFiles>
