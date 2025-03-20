@@ -39,7 +39,7 @@ public class FileDataManager extends DataManager {
         } else {
             config.load(new FileInputStream(configFilePath.toString()));
         }
-        configFileWriter = new FileWriter(configFilePath.toString());
+        configFileWriter = new FileWriter(configFilePath.toString(), false);
         config.store(configFileWriter, STORE_COMMENT);
     }
 
