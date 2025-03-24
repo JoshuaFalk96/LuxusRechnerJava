@@ -1,5 +1,6 @@
 package org.example.luxusrechnerjava;
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Labeled;
 
 import java.time.LocalDate;
@@ -35,6 +36,10 @@ public class IOHandler {
     private static final String CURRENTLY = "Aktuell: ";
     private static final String DAYS = " Tage";
     private static final String NEW_RESET_DATE = "Anfang des Zeitraums gesetzt auf den ";
+
+    public record ExpensesTableObject(SimpleStringProperty date, SimpleStringProperty amount,
+                                      SimpleStringProperty description) {
+    }
 
     /**
      * parses given String to integer
@@ -147,5 +152,13 @@ public class IOHandler {
     public static String buildNewDateOutput(LocalDate date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(IOHandler.DATE_FORMAT);
         return NEW_RESET_DATE + date.format(formatter);
+    }
+
+    public static ExpensesTableObject buildExpensesTableOutput(DataManager.TimedExpense timedExpense) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(IOHandler.DATE_FORMAT);
+        SimpleStringProperty dateString = new SimpleStringProperty(timedExpense.date().format(formatter));
+        SimpleStringProperty amountString = new SimpleStringProperty(buildMoneyOutput(timedExpense.amount()));
+        SimpleStringProperty descriptionString = new SimpleStringProperty(timedExpense.description());
+        return new ExpensesTableObject(dateString, amountString, descriptionString);
     }
 }

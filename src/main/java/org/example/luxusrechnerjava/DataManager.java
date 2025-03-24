@@ -1,5 +1,8 @@
 package org.example.luxusrechnerjava;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 import java.time.LocalDate;
 
 abstract class DataManager {
@@ -7,6 +10,9 @@ abstract class DataManager {
     enum WeekFormat {
         MO_TO_SO,
         SEVEN_DAYS
+    }
+
+    record TimedExpense(LocalDate date, int amount, String description) {
     }
 
     abstract LocalDate getResetDate();
