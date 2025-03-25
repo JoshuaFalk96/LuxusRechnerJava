@@ -26,14 +26,28 @@
                         <Label text="Neue Ausgabe" />
                         <Label text="Datum" />
                         <DatePicker fx:id="newExpenseDatePicker" />
-                        <Label fx:id="NewExpenseDateErrorLabel" alignment="CENTER" maxWidth="170.0" text="Fehler" textAlignment="CENTER" textFill="RED" />
+                        <Label fx:id="NewExpenseDateErrorLabel" alignment="CENTER" maxWidth="170.0" text="Fehler" textAlignment="CENTER" textFill="RED">
+                           <VBox.margin>
+                              <Insets bottom="-5.0" />
+                           </VBox.margin></Label>
                         <Label text="Menge" />
                         <TextField fx:id="newExpenseAmountInputField" />
-                        <Label fx:id="newExpenseAmountErrorLabel" alignment="CENTER" maxWidth="170.0" text="Fehler" textAlignment="CENTER" textFill="RED" />
+                        <Label fx:id="newExpenseAmountErrorLabel" alignment="CENTER" maxWidth="170.0" text="Fehler" textAlignment="CENTER" textFill="RED">
+                           <VBox.margin>
+                              <Insets bottom="-5.0" />
+                           </VBox.margin></Label>
                         <Label text="Beschreibung" />
                         <TextField fx:id="newExpenseDescriptionInputField" prefWidth="150.0" />
-                        <Label fx:id="newExpenseDescriptionErrorLabel" alignment="CENTER" prefWidth="170.0" text="Fehler" textAlignment="CENTER" textFill="RED" />
+                        <Label fx:id="newExpenseDescriptionErrorLabel" alignment="CENTER" prefWidth="170.0" text="Fehler" textAlignment="CENTER" textFill="RED">
+                           <VBox.margin>
+                              <Insets bottom="-5.0" />
+                           </VBox.margin></Label>
                         <Button fx:id="newExpenseAddButton" maxWidth="130.0" mnemonicParsing="false" onAction="#onClickNewExpenseAddButton" text="Hinzufügen" />
+                        <Button fx:id="removeButton" mnemonicParsing="false" onAction="#onClickRemoveButton" prefWidth="130.0" text="Entfernen">
+                           <VBox.margin>
+                              <Insets bottom="-5.0" />
+                           </VBox.margin>
+                        </Button>
                      </children>
                   </VBox>
                </children>

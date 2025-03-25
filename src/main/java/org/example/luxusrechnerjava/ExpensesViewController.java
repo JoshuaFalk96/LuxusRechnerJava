@@ -6,23 +6,35 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.example.luxusrechnerjava.DataManager.TimedExpense;
+import org.example.luxusrechnerjava.IOHandler.ExpensesTableObject;
 
 import java.time.LocalDate;
 
 public class ExpensesViewController extends SubViewController {
-
-    public TableColumn<TimedExpense, String> dateColumn;
-    public TableColumn<TimedExpense, Number> amountColumn;
-    public TableColumn<TimedExpense, String> descriptionColumn;
     @FXML
-    TableView<TimedExpense> expensesOutputTable;
-    public DatePicker newExpenseDatePicker;
-    public Label NewExpenseDateErrorLabel;
-    public TextField newExpenseAmountInputField;
-    public Label newExpenseAmountErrorLabel;
-    public TextField newExpenseDescriptionInputField;
-    public Label newExpenseDescriptionErrorLabel;
-    public Button newExpenseAddButton;
+    private Button removeButton;
+    @FXML
+    private TableColumn<ExpensesTableObject, String> dateColumn;
+    @FXML
+    private TableColumn<ExpensesTableObject, String> amountColumn;
+    @FXML
+    private TableColumn<ExpensesTableObject, String> descriptionColumn;
+    @FXML
+    private TableView<ExpensesTableObject> expensesOutputTable;
+    @FXML
+    private DatePicker newExpenseDatePicker;
+    @FXML
+    private Label NewExpenseDateErrorLabel;
+    @FXML
+    private TextField newExpenseAmountInputField;
+    @FXML
+    private Label newExpenseAmountErrorLabel;
+    @FXML
+    private TextField newExpenseDescriptionInputField;
+    @FXML
+    private Label newExpenseDescriptionErrorLabel;
+    @FXML
+    private Button newExpenseAddButton;
     private int totalBudget;
     private int savedExpenses;
 
@@ -33,9 +45,9 @@ public class ExpensesViewController extends SubViewController {
         totalBudget = App.dataManager.getBudgetConfig();
         //read currently saved expenses
         savedExpenses = App.dataManager.getSavedExpenses();
-        final ObservableList<TimedExpense> expenses = FXCollections.observableArrayList(
-                new TimedExpense(LocalDate.now(), 2000, "Pizza"),
-                new TimedExpense(LocalDate.now(), 321, "Fisch")
+        final ObservableList<ExpensesTableObject> expenses = FXCollections.observableArrayList(
+                IOHandler.buildExpensesTableOutput(new TimedExpense(LocalDate.now(), 2000, "Pizza")),
+                IOHandler.buildExpensesTableOutput(new TimedExpense(LocalDate.now(), 321, "Fisch"))
         );
         dateColumn.setCellValueFactory(cellData -> cellData.getValue().date());
         amountColumn.setCellValueFactory(cellData -> cellData.getValue().amount());
@@ -49,7 +61,13 @@ public class ExpensesViewController extends SubViewController {
     private void resetInfoLabels() {
     }
 
-    public void onClickNewExpenseAddButton(ActionEvent actionEvent) {
+    @FXML
+    private void onClickNewExpenseAddButton(ActionEvent actionEvent) {
 
+    }
+
+    @FXML
+    private void onClickRemoveButton(ActionEvent actionEvent) {
+        expensesOutputTable.getSelectionModel().getSelectedItems();
     }
 }

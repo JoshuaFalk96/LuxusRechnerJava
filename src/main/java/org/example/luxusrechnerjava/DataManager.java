@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 import java.time.LocalDate;
+import java.util.concurrent.atomic.AtomicInteger;
 
 abstract class DataManager {
 
@@ -12,8 +13,13 @@ abstract class DataManager {
         SEVEN_DAYS
     }
 
-    record TimedExpense(LocalDate date, int amount, String description) {
+    record TimedExpense(int id, LocalDate date, int amount, String description) {
+        TimedExpense (LocalDate date, int amount, String description) {
+            this(ID.getAndIncrement(), date, amount, description);
+        }
     }
+
+    static AtomicInteger ID = new AtomicInteger(0);
 
     abstract LocalDate getResetDate();
 
