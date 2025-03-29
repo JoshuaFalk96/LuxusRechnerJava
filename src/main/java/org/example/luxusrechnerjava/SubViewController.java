@@ -1,7 +1,7 @@
 package org.example.luxusrechnerjava;
 
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,7 +10,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public abstract class SubViewController {
-    public Button returnButton;
+    @FXML
+    private Button returnButton;
 
     public void initialize() {
         //set default focus on return button
@@ -21,7 +22,8 @@ public abstract class SubViewController {
      * On clicking return button on any view that is not MainView sets the view
      * to MainView replacing the current view.
      */
-    public void onClickReturnButton() {
+    @FXML
+    private void onClickReturnButton() {
         try {
             Stage stage = (Stage) returnButton.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(SubViewController.class.getResource("MainView.fxml"));
