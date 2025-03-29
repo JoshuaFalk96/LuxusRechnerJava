@@ -20,10 +20,8 @@ public abstract class SubViewController {
     /**
      * On clicking return button on any view that is not MainView sets the view
      * to MainView replacing the current view.
-     *
-     * @param actionEvent The Event triggering this function, unused
      */
-    public void onClickReturnButton(ActionEvent actionEvent) {
+    public void onClickReturnButton() {
         try {
             Stage stage = (Stage) returnButton.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(SubViewController.class.getResource("MainView.fxml"));

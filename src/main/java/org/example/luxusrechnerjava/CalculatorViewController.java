@@ -8,6 +8,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.util.Map;
+
 public class CalculatorViewController extends SubViewController {
     public TextField balanceInputField;
     public Label balanceErrorLabel;
@@ -40,7 +42,9 @@ public class CalculatorViewController extends SubViewController {
             HBox.setMargin(balanceVBox, new Insets(0, 0, 0, 135));
 
             //read saved expenses
-            expenses = App.dataManager.getSavedExpenses();
+            Map<Integer, DataManager.TimedExpense> savedExpenses = App.dataManager.getSavedExpenses();
+            expenses = 0;
+            savedExpenses.forEach((id, savedExpense) -> expenses = expenses + savedExpense.amount());
         }
     }
 
@@ -57,16 +61,26 @@ public class CalculatorViewController extends SubViewController {
      * and sets error messages in error fields if necessary
      * then calls calculator to calculate luxury money from balance and expenses,
      * displays calculated luxury money and remaining week budget
-     * @param actionEvent The Event triggering this function, unused
      */
-    public void onClickCalculateButton(ActionEvent actionEvent) {
+    public void onClickCalculateButton() {
         resetErrorLabels();
         //get input as int
-        Integer balance = IOHandler.parseMoneyInput(balanceInputField.getText(), balanceErrorLabel);
+        Integer balance = null;
+        try {
+            balance = IOHandler.parseMoneyInput(balanceInputField.getText());
+        } catch (IOHandler.NotIntInputException e) {
+            balanceErrorLabel.setText(e.getErrorText());
+            return;
+        }
         //expenses input only exists if expenses not saved
         if (!saveExpenses) {
             //get input as int
-            expenses = IOHandler.parseMoneyInput(expensesInputField.getText(), expensesErrorLabel);
+            try {
+                expenses = IOHandler.parseMoneyInput(expensesInputField.getText());
+            } catch (IOHandler.NotIntInputException e) {
+                expensesErrorLabel.setText(e.getErrorText());
+                return;
+            }
         } //no else case as saved expenses already read in initialize methode
         if (balance == null || expenses == null) return; //inputs are not set correctly
 
@@ -74,7 +88,7 @@ public class CalculatorViewController extends SubViewController {
         int luxuryMoney = LuxuryCalculator.calculateLuxuryMoney(balance, expenses);
 
         //read week budget from config
-         int budget = App.dataManager.getBudgetConfig();
+        int budget = App.dataManager.getBudgetConfig();
 
         //display remaining budget for current week
         remainingBudgetOutputField.setText(IOHandler.buildMoneyOutput(budget - expenses));

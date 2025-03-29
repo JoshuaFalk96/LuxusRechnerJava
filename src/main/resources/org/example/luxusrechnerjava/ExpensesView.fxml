@@ -15,7 +15,7 @@
                         <TableView fx:id="expensesOutputTable" prefHeight="288.0">
                           <columns>
                             <TableColumn fx:id="dateColumn" prefWidth="75.0" text="Datum" />
-                            <TableColumn fx:id="amountColumn" prefWidth="75.0" text="Menge" />
+                            <TableColumn fx:id="amountColumn" prefWidth="75.0" text="Betrag" />
                               <TableColumn fx:id="descriptionColumn" prefWidth="150.0" text="Beschreibung" />
                           </columns>
                         </TableView>
@@ -25,19 +25,19 @@
                      <children>
                         <Label text="Neue Ausgabe" />
                         <Label text="Datum" />
-                        <DatePicker fx:id="newExpenseDatePicker" />
-                        <Label fx:id="NewExpenseDateErrorLabel" alignment="CENTER" maxWidth="170.0" text="Fehler" textAlignment="CENTER" textFill="RED">
+                        <DatePicker fx:id="newExpenseDatePicker" promptText="Datum" />
+                        <Label fx:id="newExpenseDateErrorLabel" alignment="CENTER" maxWidth="170.0" text="Fehler" textAlignment="CENTER" textFill="RED">
                            <VBox.margin>
                               <Insets bottom="-5.0" />
                            </VBox.margin></Label>
-                        <Label text="Menge" />
-                        <TextField fx:id="newExpenseAmountInputField" />
+                        <Label text="Betrag" />
+                        <TextField fx:id="newExpenseAmountInputField" onAction="#onClickNewExpenseAddButton" promptText="Betrag in €" />
                         <Label fx:id="newExpenseAmountErrorLabel" alignment="CENTER" maxWidth="170.0" text="Fehler" textAlignment="CENTER" textFill="RED">
                            <VBox.margin>
                               <Insets bottom="-5.0" />
                            </VBox.margin></Label>
                         <Label text="Beschreibung" />
-                        <TextField fx:id="newExpenseDescriptionInputField" prefWidth="150.0" />
+                        <TextField fx:id="newExpenseDescriptionInputField" onAction="#onClickNewExpenseAddButton" prefWidth="150.0" promptText="Kurze Beschreibung" />
                         <Label fx:id="newExpenseDescriptionErrorLabel" alignment="CENTER" prefWidth="170.0" text="Fehler" textAlignment="CENTER" textFill="RED">
                            <VBox.margin>
                               <Insets bottom="-5.0" />

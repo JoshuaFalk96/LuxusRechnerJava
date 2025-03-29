@@ -81,10 +81,16 @@ public class ConfigViewController extends SubViewController {
         cycleErrorLabel.setText("");
     }
 
-    public void onClickBudgetConfirmButton(ActionEvent actionEvent) {
+    public void onClickBudgetConfirmButton() {
         resetErrorLabels();
         //read new budget from input field
-        Integer newBudget = IOHandler.parseMoneyInput(budgetInputField.getText(), budgetErrorLabel);
+        Integer newBudget = null;
+        try {
+            newBudget = IOHandler.parseMoneyInput(budgetInputField.getText());
+        } catch (IOHandler.NotIntInputException e) {
+            budgetErrorLabel.setText(e.getErrorText());
+            return;
+        }
         if (newBudget == null) return; //input was empty or not parsable
         //save new budget to config
         App.dataManager.setBudgetConfig(newBudget);
@@ -93,10 +99,16 @@ public class ConfigViewController extends SubViewController {
         budgetInputField.setPromptText(IOHandler.buildBudgetOutput(newBudget));
     }
 
-    public void onClickResetCycleConfirmButton(ActionEvent actionEvent) {
+    public void onClickResetCycleConfirmButton() {
         resetErrorLabels();
         //read new length of cycle from input field
-        Integer newCycleLength = IOHandler.parseIntegerInput(cycleInputField.getText(), cycleErrorLabel);
+        Integer newCycleLength = null;
+        try {
+            newCycleLength = IOHandler.parseIntegerInput(cycleInputField.getText());
+        } catch (IOHandler.NotIntInputException e) {
+            cycleErrorLabel.setText(e.getErrorText());
+            return;
+        }
         if (newCycleLength == null) return; //input was empty or not parsable
         //save new cycle length to config
         App.dataManager.setCycleLengthConfig(newCycleLength);
@@ -105,7 +117,7 @@ public class ConfigViewController extends SubViewController {
         cycleInputField.setPromptText(IOHandler.buildCycleOutput(newCycleLength));
     }
 
-    public void onClickWeekFormatMoSoButton(ActionEvent actionEvent) {
+    public void onClickWeekFormatMoSoButton() {
         //set MoToSo as highlighted Button
         weekFormatMoSoButton.setStyle("-fx-opacity:1.0");
         weekFormat7DaysButton.setStyle("-fx-opacity:0.5");
@@ -113,7 +125,7 @@ public class ConfigViewController extends SubViewController {
         App.dataManager.setWeekFormatConfig(WeekFormat.MO_TO_SO);
     }
 
-    public void onClickWeekFormat7DaysButton(ActionEvent actionEvent) {
+    public void onClickWeekFormat7DaysButton() {
         //set 7Days as highlighted button
         weekFormatMoSoButton.setStyle("-fx-opacity:0.5");
         weekFormat7DaysButton.setStyle("-fx-opacity:1.0");
@@ -121,7 +133,7 @@ public class ConfigViewController extends SubViewController {
         App.dataManager.setWeekFormatConfig(WeekFormat.SEVEN_DAYS);
     }
 
-    public void onClickSaveExpensesYesButton(ActionEvent actionEvent) {
+    public void onClickSaveExpensesYesButton() {
         //set Yes as highlighted button
         saveExpensesYesButton.setStyle("-fx-opacity:1.0");
         saveExpensesNoButton.setStyle("-fx-opacity:0.5");
@@ -129,7 +141,7 @@ public class ConfigViewController extends SubViewController {
         App.dataManager.setSaveExpensesConfig(true);
     }
 
-    public void onClickSaveExpensesNoButton(ActionEvent actionEvent) {
+    public void onClickSaveExpensesNoButton() {
         //set No as highlighted button
         saveExpensesYesButton.setStyle("-fx-opacity:0.5");
         saveExpensesNoButton.setStyle("-fx-opacity:1.0");
@@ -137,7 +149,7 @@ public class ConfigViewController extends SubViewController {
         App.dataManager.setSaveExpensesConfig(false);
     }
 
-    public void onClickPartWeekPartBudgetButton(ActionEvent actionEvent) {
+    public void onClickPartWeekPartBudgetButton() {
         //set partBudget as highlighted button
         partWeekPartBudgetButton.setStyle("-fx-opacity:1.0");
         partWeekFullBudgetButton.setStyle("-fx-opacity:0.5");
@@ -145,7 +157,7 @@ public class ConfigViewController extends SubViewController {
         App.dataManager.setPartBudgetConfig(true);
     }
 
-    public void onClickPartWeekFullBudgetButton(ActionEvent actionEvent) {
+    public void onClickPartWeekFullBudgetButton() {
         //set fullBudget as highlighted button
         partWeekPartBudgetButton.setStyle("-fx-opacity:0.5");
         partWeekFullBudgetButton.setStyle("-fx-opacity:1.0");

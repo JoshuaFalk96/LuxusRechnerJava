@@ -1,7 +1,6 @@
 package org.example.luxusrechnerjava;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.control.Labeled;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,12 +11,12 @@ public class IOHandler {
     public static final String WEEK_FORMAT_INFO = "Wochen können von Montag bis Sonntag oder \n in 7 Tage Abschnitten ab Zahlungeingang berechnet werden";
     public static final String SAVE_EXPENSES_INFO = "Sollen die Ausgaben der aktuellen Woche gespeichert werden?";
     public static final String PART_BUDGET_INFO = "Wenn der Zeitraum nicht volle Wochen enthält, werden diese \n als ganze Wochen bertachtet oder das Budget entsprechend \n der Tage verringert";
-    public static final String BUDGET_RESET = "Budget wurde zurückgesetz";
     public static final String MAIN_TITLE = "Luxusrechner";
     public static final String CALCULATOR_TITLE = "Luxusrechner - Rechner";
     public static final String EXPENSES_TITLE = "Luxusrechner - Ausgaben";
     public static final String CONFIG_TITLE = "Luxusrechner - Einstellungen";
     public static final String DATE_FORMAT = "dd.MM.yyyy";
+    public static final String ERROR_AT_AMOUNT = "Betrag: ";
     private static final String FRONT_CURRENCY_SYMBOL = ""; //for currencies like $100
     private static final String BACK_CURRENCY_SYMBOL = "€"; //for currencies like 100€
     private static final String SUB_CURRENCY_DIVIDER = ","; //language dependent
@@ -37,23 +36,34 @@ public class IOHandler {
     private static final String DAYS = " Tage";
     private static final String NEW_RESET_DATE = "Anfang des Zeitraums gesetzt auf den ";
 
+
     public record ExpensesTableObject(int id, SimpleStringProperty date, SimpleStringProperty amount,
                                       SimpleStringProperty description) {
     }
 
+    public static class NotIntInputException extends Exception {
+        private final String errorText;
+
+        public NotIntInputException(String errorText) {
+            this.errorText = errorText;
+        }
+
+        public String getErrorText() {
+            return errorText;
+        }
+    }
+
     /**
      * parses given String to integer
-     * writes error messages to given output if input is empty or not valid
+     * throws exception with error text if input is empty or not valid
      *
-     * @param input       String from input field for parsing
-     * @param errorOutput Output for error message
-     * @return input as integer if parsable, null otherwise
+     * @param input String from input field for parsing
+     * @return input as integer if parsable
      */
-    public static Integer parseIntegerInput(String input, Labeled errorOutput) {
+    public static int parseIntegerInput(String input) throws NotIntInputException {
         //check if input is empty
         if (input.isBlank()) {
-            errorOutput.setText(INPUT_EMPTY);
-            return null;
+            throw new NotIntInputException(INPUT_EMPTY);
         }
         //parse input to integer
         int output;
@@ -61,13 +71,12 @@ public class IOHandler {
             output = Integer.parseInt(input);
         } catch (NumberFormatException e) {
             //input is not valid integer
-            errorOutput.setText(INPUT_NOT_INT);
-            return null;
+            throw new NotIntInputException(INPUT_NOT_INT);
         }
         return output;
     }
 
-    public static Integer parseMoneyInput(String input, Labeled errorOutput) {
+    public static int parseMoneyInput(String input) throws NotIntInputException {
         //input may need to be transformed to the smaller unit of currency or not depending on input
         //so local changeable conversion factor is needed
         int localCurrencyConvergionFactor = CURRENCY_CONVERSION_FACTOR;
@@ -82,14 +91,10 @@ public class IOHandler {
                 localCurrencyConvergionFactor = 1;
             }
         }
-        Integer output = parseIntegerInput(input, errorOutput);
-        if (output == null) {
-            //forwards null as error value for invalid input
-            return null;
-        } else {
-            //convert input to smaller currency unit for internal processing
-            return output * localCurrencyConvergionFactor;
-        }
+        int output = parseIntegerInput(input);
+        //convert input to smaller currency unit for internal processing
+        return output * localCurrencyConvergionFactor;
+
     }
 
     public static String buildRemainingTimeOutput(int totalDays) {
@@ -154,7 +159,7 @@ public class IOHandler {
         return NEW_RESET_DATE + date.format(formatter);
     }
 
-    static ExpensesTableObject buildExpensesTableOutput(DataManager.TimedExpense timedExpense) {
+    static ExpensesTableObject buildExpensesTableObject(DataManager.TimedExpense timedExpense) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(IOHandler.DATE_FORMAT);
         SimpleStringProperty dateString = new SimpleStringProperty(timedExpense.date().format(formatter));
         SimpleStringProperty amountString = new SimpleStringProperty(buildMoneyOutput(timedExpense.amount()));

@@ -40,7 +40,8 @@ public class MainViewController {
 
     /**
      * Opens another FXML View in the same window, replacing MainView.
-     * @param fxml Name of the FXML file
+     *
+     * @param fxml  Name of the FXML file
      * @param title The new window title to use
      */
     private void openView(String fxml, String title) {
@@ -61,9 +62,8 @@ public class MainViewController {
      * On clicking the confirm button sets the internally saved reset date
      * to the date currently in the dae picker and prints the saved date as
      * info in the view.
-     * @param actionEvent The Event triggering this function, unused
      */
-    public void onClickConfirmButton(ActionEvent actionEvent) {
+    public void onClickConfirmButton() {
         LocalDate date = datePicker.getValue();
         //save the new date as reset date in memory
         App.dataManager.setResetDate(date);
@@ -72,15 +72,15 @@ public class MainViewController {
         dateResetLabel.setText(IOHandler.buildNewDateOutput(date));
     }
 
-    public void onClickCalculatorButton(ActionEvent actionEvent) {
+    public void onClickCalculatorButton() {
         openView("CalculatorView.fxml", IOHandler.CALCULATOR_TITLE);
     }
 
-    public void onClickExpensesButton(ActionEvent actionEvent) {
+    public void onClickExpensesButton() {
         openView("ExpensesView.fxml", IOHandler.EXPENSES_TITLE);
     }
 
-    public void onClickConfigButton(ActionEvent actionEvent) {
+    public void onClickConfigButton() {
         openView("ConfigView.fxml", IOHandler.CONFIG_TITLE);
     }
 }

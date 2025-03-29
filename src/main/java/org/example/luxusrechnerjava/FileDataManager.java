@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.Properties;
 
 public class FileDataManager extends DataManager {
@@ -49,8 +50,9 @@ public class FileDataManager extends DataManager {
     }
 
     @Override
-    int getSavedExpenses() {
-        return Integer.parseInt(config.getProperty(SAVED_EXPENSES_NAME));
+    Map<Integer, TimedExpense> getSavedExpenses() {
+        //TODO change to new expense format
+        return null;
     }
 
     @Override
@@ -89,7 +91,8 @@ public class FileDataManager extends DataManager {
     }
 
     @Override
-    void setSavedExpenses(int expenses) {
+    void setSavedExpenses(Map<Integer, TimedExpense> expenses) {
+        //TODO change to new expense format
         try {
             config.setProperty(SAVED_EXPENSES_NAME, String.valueOf(expenses));
             config.store(configFileWriter, STORE_COMMENT);
@@ -146,5 +149,15 @@ public class FileDataManager extends DataManager {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    void addSavedExpense(TimedExpense expense) {
+        //TODO add expense
+    }
+
+    @Override
+    void removeSavedExpense(int id) {
+        //TODO remove expense
     }
 }

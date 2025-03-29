@@ -15,8 +15,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Path configPath = Paths.get(System.getProperty("user.home"),"LuxuryCalculator/config.properties");
-        dataManager = new FileDataManager(configPath);
+        //Path configPath = Paths.get(System.getProperty("user.home"),"LuxuryCalculator/config.properties");
+        dataManager = new RAMDataManager();
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("MainView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle(IOHandler.MAIN_TITLE);
