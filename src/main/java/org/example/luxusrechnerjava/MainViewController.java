@@ -1,12 +1,11 @@
 package org.example.luxusrechnerjava;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -14,28 +13,39 @@ import java.io.IOException;
 import java.time.LocalDate;
 
 public class MainViewController {
-    public Button calculatorButton;
-    public Button expensesButton;
-    public DatePicker datePicker;
-    public Button confirmButton;
-    public Button configButton;
-    public Label dateResetLabel;
-    public VBox dateResetVbox;
-    public Label expensesInfoLabel2;
-    public Label expensesInfoLabel1;
+
+    @FXML
+    private Button configButton;
+    @FXML
+    private Button fixedCostButton;
+    @FXML
+    private Button expensesButton;
+    @FXML
+    private Button confirmTimespanButton;
+    @FXML
+    private DatePicker timespanEndDatePicker;
+    @FXML
+    private Label timespanOutputLabel;
+    @FXML
+    private DatePicker timespanBeginingDatePicker;
+    @FXML
+    private Button calculateButton;
+    @FXML
+    private Label deductionsErrorLabel;
+    @FXML
+    private TextField deductionsInputField;
+    @FXML
+    private Label balanceErrorLabel;
+    @FXML
+    private TextField balanceInputField;
+    @FXML
+    private TableColumn amountColumn;
+    @FXML
+    private TableColumn descriptionColumn;
+    @FXML
+    private TableView calculationOutputTable;
 
     public void initialize() {
-        //set the date picker to have reset date as default value
-        datePicker.setValue(App.dataManager.getResetDate());
-        //read saveExpenses from config
-        boolean saveExpenses = App.dataManager.getSaveExpensesConfig();
-        if (!saveExpenses) {
-            //disable accesses to expensesView if not saving expenses
-            expensesButton.setDisable(true);
-            //display reminder text that expenses not saved visible
-            expensesInfoLabel1.setVisible(true);
-            expensesInfoLabel2.setVisible(true);
-        }
     }
 
     /**
@@ -46,7 +56,7 @@ public class MainViewController {
      */
     private void openView(String fxml, String title) {
         try {
-            Stage stage = (Stage) calculatorButton.getScene().getWindow();
+            Stage stage = (Stage) configButton.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource(fxml));
             Scene scene = new Scene(fxmlLoader.load());
             stage.setTitle(title);
@@ -58,29 +68,25 @@ public class MainViewController {
         }
     }
 
-    /**
-     * On clicking the confirm button sets the internally saved reset date
-     * to the date currently in the dae picker and prints the saved date as
-     * info in the view.
-     */
-    public void onClickConfirmButton() {
-        LocalDate date = datePicker.getValue();
-        //save the new date as reset date in memory
-        App.dataManager.setResetDate(date);
-        //output information text to confirm action
-        VBox.setMargin(dateResetVbox, new Insets(0, 0, -10, 0));
-        dateResetLabel.setText(IOHandler.buildNewDateOutput(date));
-    }
-
-    public void onClickCalculatorButton() {
-        openView("CalculatorView.fxml", IOHandler.CALCULATOR_TITLE);
-    }
-
-    public void onClickExpensesButton() {
+    @FXML
+    private void onClickExpensesButton() {
         openView("ExpensesView.fxml", IOHandler.EXPENSES_TITLE);
     }
 
-    public void onClickConfigButton() {
+    @FXML
+    private void onClickConfigButton() {
         openView("ConfigView.fxml", IOHandler.CONFIG_TITLE);
+    }
+
+    @FXML
+    private void onClickCalculateButton() {
+    }
+
+    @FXML
+    private void onClickConfirmTimespanButton() {
+    }
+
+    @FXML
+    private void onClickFixedCostButton() {
     }
 }
