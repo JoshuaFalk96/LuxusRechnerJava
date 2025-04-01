@@ -16,12 +16,14 @@ public class IOHandler {
     public static final String EXPENSES_TITLE = "Luxusrechner - Ausgaben";
     public static final String CONFIG_TITLE = "Luxusrechner - Einstellungen";
     public static final String DATE_FORMAT = "dd.MM.yyyy";
-    public static final String ERROR_AT_AMOUNT = "Betrag: ";
     public static final String NEW_EXPENSE = "Neue Ausgabe";
     public static final String NEW_FIX_COST = "Neue Fixkosten";
     public static final String EXPENSES_PLACEHOLDER = "Noch keine Ausgaben angegeben";
     public static final String FIX_COST_PLACEHOLDER = "Noch keine Fixkosen angegeben";
     public static final String DATE_INPUT_ERROR = "Datum ist nicht korrekt";
+    public static final String RED_BORDER_STYLE = "-fx-border-color: red";
+    public static final String WRONG_TIME_SPAN_ORDER1 = "Begin muss vor";
+    public static final String WRONG_TIME_SPAN_ORDER2 = "Ende sein";
 
     private static final String FRONT_CURRENCY_SYMBOL = ""; //for currencies like $100
     private static final String BACK_CURRENCY_SYMBOL = "€"; //for currencies like 100€

@@ -104,7 +104,7 @@ public class ExpensesViewController extends SubViewController {
         if (date == null) {
             //date input could not be parsed, print error and abort
             newExpenseDateErrorLabel.setText(IOHandler.DATE_INPUT_ERROR);
-            newExpenseDatePicker.setStyle("-fx-border-color: red");
+            newExpenseDatePicker.setStyle(IOHandler.RED_BORDER_STYLE);
             return;
         }
         //read input from amount field
@@ -113,8 +113,8 @@ public class ExpensesViewController extends SubViewController {
             amount = IOHandler.parseMoneyInput(newExpenseAmountInputField.getText());
         } catch (IOHandler.NotIntInputException e) {
             //print error as amount field is not correctly set and abort
-            newExpenseAmountErrorLabel.setText(IOHandler.ERROR_AT_AMOUNT + e.getErrorText());
-            newExpenseAmountInputField.setStyle("-fx-border-color: red");
+            newExpenseAmountErrorLabel.setText(e.getErrorText());
+            newExpenseAmountInputField.setStyle(IOHandler.RED_BORDER_STYLE);
             return;
         }
         //read input from description field
