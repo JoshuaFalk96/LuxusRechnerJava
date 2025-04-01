@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="360.0" prefWidth="540.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.luxusrechnerjava.ConfigViewController">
+<AnchorPane prefHeight="380.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.luxusrechnerjava.ConfigViewController">
    <children>
       <VBox alignment="CENTER" prefHeight="360.0" prefWidth="540.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -29,9 +29,9 @@
                   <Button fx:id="budgetConfirmButton" mnemonicParsing="false" onAction="#onClickBudgetConfirmButton" prefWidth="40.0" text="OK" />
                </children>
                <padding>
-                  <Insets right="18.0" />
+                  <Insets right="26.0" />
                </padding></HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="200.0" spacing="10.0">
+            <HBox alignment="CENTER_RIGHT" disable="true" prefHeight="60.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <Label text="Länge des Berechnungszeitraums" />
                   <Button fx:id="cycleInfoButton" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
@@ -52,7 +52,7 @@
                   <Button fx:id="cycleConfirmButton" mnemonicParsing="false" onAction="#onClickResetCycleConfirmButton" prefWidth="40.0" text="OK" />
                </children>
                <padding>
-                  <Insets right="18.0" />
+                  <Insets right="26.0" />
                </padding></HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="200.0" spacing="10.0">
                <children>
@@ -62,9 +62,9 @@
                   <Button fx:id="weekFormat7DaysButton" mnemonicParsing="false" onAction="#onClickWeekFormat7DaysButton" prefWidth="110.0" text="7 Tage ab Gehalt" />
                </children>
                <padding>
-                  <Insets right="18.0" />
+                  <Insets right="26.0" />
                </padding></HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="200.0" spacing="10.0">
+            <HBox alignment="CENTER_RIGHT" disable="true" prefHeight="60.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <Label text="Ausgaben Speichern" />
                   <Button fx:id="saveExpensesInfoButton" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
@@ -72,7 +72,7 @@
                   <Button fx:id="saveExpensesNoButton" mnemonicParsing="false" onAction="#onClickSaveExpensesNoButton" prefWidth="110.0" text="Nein" />
                </children>
                <padding>
-                  <Insets right="18.0" />
+                  <Insets right="26.0" />
                </padding></HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="200.0" spacing="10.0">
                <children>
@@ -82,7 +82,7 @@
                   <Button fx:id="partWeekFullBudgetButton" mnemonicParsing="false" onAction="#onClickPartWeekFullBudgetButton" prefWidth="110.0" text="Volles Budget" />
                </children>
                <padding>
-                  <Insets right="18.0" />
+                  <Insets right="26.0" />
                </padding></HBox>
             <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0">
                <children>
