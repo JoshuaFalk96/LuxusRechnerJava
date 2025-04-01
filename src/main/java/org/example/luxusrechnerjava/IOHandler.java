@@ -12,11 +12,17 @@ public class IOHandler {
     public static final String SAVE_EXPENSES_INFO = "Sollen die Ausgaben der aktuellen Woche gespeichert werden?";
     public static final String PART_BUDGET_INFO = "Wenn der Zeitraum nicht volle Wochen enthält, werden diese \n als ganze Wochen bertachtet oder das Budget entsprechend \n der Tage verringert";
     public static final String MAIN_TITLE = "Luxusrechner";
-    public static final String CALCULATOR_TITLE = "Luxusrechner - Rechner";
+    public static final String FIX_COST_TITLE = "Luxusrechner - Fixkosten";
     public static final String EXPENSES_TITLE = "Luxusrechner - Ausgaben";
     public static final String CONFIG_TITLE = "Luxusrechner - Einstellungen";
     public static final String DATE_FORMAT = "dd.MM.yyyy";
     public static final String ERROR_AT_AMOUNT = "Betrag: ";
+    public static final String NEW_EXPENSE = "Neue Ausgabe";
+    public static final String NEW_FIX_COST = "Neue Fixkosten";
+    public static final String EXPENSES_PLACEHOLDER = "Noch keine Ausgaben angegeben";
+    public static final String FIX_COST_PLACEHOLDER = "Noch keine Fixkosen angegeben";
+    public static final String DATE_INPUT_ERROR = "Datum ist nicht korrekt";
+
     private static final String FRONT_CURRENCY_SYMBOL = ""; //for currencies like $100
     private static final String BACK_CURRENCY_SYMBOL = "€"; //for currencies like 100€
     private static final String SUB_CURRENCY_DIVIDER = ","; //language dependent
@@ -34,7 +40,7 @@ public class IOHandler {
     private static final String NEW_EXPENSES_2 = " wurde gespeichert";
     private static final String CURRENTLY = "Aktuell: ";
     private static final String DAYS = " Tage";
-    private static final String NEW_RESET_DATE = "Anfang des Zeitraums gesetzt auf den ";
+    private static final String TIME_SPAN_SEPARATOR = " bis ";
 
 
     public record ExpensesTableObject(int id, SimpleStringProperty date, SimpleStringProperty amount,
@@ -154,9 +160,9 @@ public class IOHandler {
         return CURRENTLY + days + DAYS;
     }
 
-    public static String buildNewDateOutput(LocalDate date) {
+    public static String buildTimeSpanOutput(LocalDate begin, LocalDate end) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(IOHandler.DATE_FORMAT);
-        return NEW_RESET_DATE + date.format(formatter);
+        return begin.format(formatter) + TIME_SPAN_SEPARATOR + end.format(formatter);
     }
 
     static ExpensesTableObject buildExpensesTableObject(DataManager.TimedExpense timedExpense) {

@@ -45,14 +45,26 @@ public class FileDataManager extends DataManager {
     }
 
     @Override
-    LocalDate getResetDate() {
+    LocalDate getBeginDate() {
         return LocalDate.parse(config.getProperty(RESET_DATE_NAME));
+    }
+
+    @Override
+    LocalDate getEndDate() {
+        //TODO
+        return null;
     }
 
     @Override
     Map<Integer, TimedExpense> getSavedExpenses() {
         //TODO change to new expense format
         return null;
+    }
+
+    @Override
+    Map<Integer, TimedExpense> getSavedFixCost() {
+        //TODO
+        return Map.of();
     }
 
     @Override
@@ -81,13 +93,18 @@ public class FileDataManager extends DataManager {
     }
 
     @Override
-    void setResetDate(LocalDate resetDate) {
+    void setBeginDate(LocalDate resetDate) {
         try {
             config.setProperty(RESET_DATE_NAME, resetDate.toString());
             config.store(configFileWriter, STORE_COMMENT);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    void setEndDate(LocalDate resetDate) {
+        //TODO
     }
 
     @Override
@@ -99,6 +116,11 @@ public class FileDataManager extends DataManager {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    void setSavedFixCost(Map<Integer, TimedExpense> expenses) {
+        //TODO
     }
 
     @Override
@@ -157,7 +179,17 @@ public class FileDataManager extends DataManager {
     }
 
     @Override
+    void addSavedFixCost(TimedExpense expense) {
+        //TODO
+    }
+
+    @Override
     void removeSavedExpense(int id) {
         //TODO remove expense
+    }
+
+    @Override
+    void removeSavedFixCost(int id) {
+        //TODO
     }
 }

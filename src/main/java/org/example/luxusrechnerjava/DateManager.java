@@ -29,7 +29,7 @@ public class DateManager {
         int daysToWeekEnd = 7;
         if (weekFormat == DataManager.WeekFormat.SEVEN_DAYS) {
             //week is defined as 7-day intervals starting reset day
-            LocalDate resetDate = App.dataManager.getResetDate();
+            LocalDate resetDate = App.dataManager.getBeginDate();
             //get days from reset day to input date
             int daysSinceReset = (int) resetDate.until(dateInWeek, ChronoUnit.DAYS);
             //remove full 7-day intervals and subtract passed days in current week
@@ -61,7 +61,7 @@ public class DateManager {
      */
     static LocalDate getEndOfCycleDate() {
         //get reset date and cycle length from config
-        LocalDate resetDate = App.dataManager.getResetDate();
+        LocalDate resetDate = App.dataManager.getBeginDate();
         int cycleLength = App.dataManager.getCycleLengthConfig();
         //end of cycle date ist cycle length days after reset date
         //-1 to consider current reset as inclusive and next reset date as exclusive

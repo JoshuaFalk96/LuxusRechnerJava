@@ -66,7 +66,7 @@
                             </children>
                         </VBox>
                         <Button fx:id="confirmTimespanButton" alignment="CENTER" mnemonicParsing="false"
-                                onAction="#onClickConfirmTimespanButton" prefWidth="130.0" text="Zeitraum Bestätigen"/>
+                                onAction="#onClickConfirmTimeSpanButton" prefWidth="130.0" text="Zeitraum Bestätigen"/>
                         <Button fx:id="expensesButton" alignment="CENTER" mnemonicParsing="false"
                                 onAction="#onClickExpensesButton" prefWidth="130.0" text="Ausgaben bearbeiten"/>
                         <Button fx:id="fixedCostButton" mnemonicParsing="false" onAction="#onClickFixedCostButton"

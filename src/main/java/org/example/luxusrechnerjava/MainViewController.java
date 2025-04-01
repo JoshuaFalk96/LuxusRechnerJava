@@ -42,6 +42,7 @@ public class MainViewController {
     private TableView calculationOutputTable;
 
     public void initialize() {
+        timespanOutputLabel.setText(IOHandler.buildTimeSpanOutput(App.dataManager.getBeginDate(), App.dataManager.getEndDate()));
     }
 
     /**
@@ -52,7 +53,7 @@ public class MainViewController {
      */
     private void openView(String fxml, String title) {
         try {
-            Stage stage = (Stage) configButton.getScene().getWindow();
+            Stage stage = (Stage) calculationOutputTable.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource(fxml));
             Scene scene = new Scene(fxmlLoader.load());
             stage.setTitle(title);
@@ -65,8 +66,27 @@ public class MainViewController {
     }
 
     @FXML
+    private void onClickCalculateButton() {
+    }
+
+    @FXML
+    private void onClickConfirmTimeSpanButton() {
+    }
+
+    @FXML
     private void onClickExpensesButton() {
+        //attach view type expenses to window so correct data is manipulated
+        Stage stage = (Stage) expensesButton.getScene().getWindow();
+        stage.setUserData(DataManager.ExpensesViewType.EXPENSES);
         openView("ExpensesView.fxml", IOHandler.EXPENSES_TITLE);
+    }
+
+    @FXML
+    private void onClickFixedCostButton() {
+        //attach view type fix cost to window so correct data is manipulated
+        Stage stage = (Stage) fixedCostButton.getScene().getWindow();
+        stage.setUserData(DataManager.ExpensesViewType.FIX_COST);
+        openView("ExpensesView.fxml", IOHandler.FIX_COST_TITLE);
     }
 
     @FXML
@@ -74,15 +94,4 @@ public class MainViewController {
         openView("ConfigView.fxml", IOHandler.CONFIG_TITLE);
     }
 
-    @FXML
-    private void onClickCalculateButton() {
-    }
-
-    @FXML
-    private void onClickConfirmTimespanButton() {
-    }
-
-    @FXML
-    private void onClickFixedCostButton() {
-    }
 }
