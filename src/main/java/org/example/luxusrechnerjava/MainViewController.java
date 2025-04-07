@@ -67,14 +67,22 @@ public class MainViewController {
         timeSpanEndDatePicker.setStyle("");
     }
 
-    private void outputCalculationToTable(int balance, int deductions, int expenses, int fixCost, int result) {
+    private void outputCalculationToTable(int balance, int deductions, LuxuryCalculator.CalculationResult result) {
         //TODO centralize Strings
-        int currentWeekBudget = App.dataManager.getBudgetConfig() - expenses;
+        int daysAfterCurrentWeek = DateManager.getDaysToCycleEnd(DateManager.getEndOfWeekDate(DateManager.getToday()));
+        int fullWeeks = daysAfterCurrentWeek / 7;
+        int remainingDays = daysAfterCurrentWeek % 7;
+        int fullBudgets = result.fullBudgets();
+        if (remainingDays != 0 && !App.dataManager.getPartBudgetConfig()) {
+            fullBudgets += result.partBudget();
+            fullWeeks++;
+        }
+        int currentWeekBudget = App.dataManager.getBudgetConfig() - result.expenses();
         String currentBudgetOutput;
         if (currentWeekBudget < 0) {
             currentBudgetOutput = "0€ (" + IOHandler.buildMoneyOutput(Math.abs(currentWeekBudget)) + " überzogen)";
         } else {
-            currentBudgetOutput =IOHandler.buildMoneyOutput(currentWeekBudget);
+            currentBudgetOutput = IOHandler.buildMoneyOutput(currentWeekBudget);
         }
         ObservableList<CalculateTableEntry> tableEntries = FXCollections.observableArrayList(
                 new CalculateTableEntry(new SimpleStringProperty("Kontostand"),
@@ -82,18 +90,19 @@ public class MainViewController {
                 new CalculateTableEntry(new SimpleStringProperty("Abzüge"),
                         new SimpleStringProperty(IOHandler.buildMoneyOutput(deductions))),
                 new CalculateTableEntry(new SimpleStringProperty("Fixkosten"),
-                        new SimpleStringProperty(IOHandler.buildMoneyOutput(fixCost))),
+                        new SimpleStringProperty(IOHandler.buildMoneyOutput(result.fixCost()))),
                 new CalculateTableEntry(new SimpleStringProperty("Budget diese Woche"),
                         new SimpleStringProperty(currentBudgetOutput)),
-                //TODO get future full budgets and number of weeks
-                new CalculateTableEntry(new SimpleStringProperty("Budget für 3 Wochen"),
-                        new SimpleStringProperty(IOHandler.buildMoneyOutput(30000))),
-                //TODO get budget für last week and number of days
-                new CalculateTableEntry(new SimpleStringProperty("Budget für 5 Tage"),
-                        new SimpleStringProperty(IOHandler.buildMoneyOutput(7000))),
-                new CalculateTableEntry(new SimpleStringProperty("Luxus Geld"),
-                        new SimpleStringProperty(IOHandler.buildMoneyOutput(result)))
+                new CalculateTableEntry(new SimpleStringProperty("Budget für " + fullWeeks + " Wochen"),
+                        new SimpleStringProperty(IOHandler.buildMoneyOutput(fullBudgets)))
         );
+        if (App.dataManager.getPartBudgetConfig() && result.partBudget() != 0) {
+            tableEntries.add(new CalculateTableEntry(new SimpleStringProperty("Budget für " + remainingDays + " Tage"),
+                    new SimpleStringProperty(IOHandler.buildMoneyOutput(result.partBudget()))));
+        }
+        tableEntries.add(new CalculateTableEntry(new SimpleStringProperty("Luxus Geld"),
+                new SimpleStringProperty(IOHandler.buildMoneyOutput(result.luxuryMoney()))));
+
         calculationOutputTable.setItems(tableEntries);
     }
 
@@ -156,23 +165,8 @@ public class MainViewController {
             }
         }
         //read and accumulate expenses
-        int totalExpenses = 0;
-        for (DataManager.TimedExpense expense : App.dataManager.getSavedExpenses().values()) {
-            //TODO check date of expense before adding to total
-            totalExpenses += expense.amount();
-        }
-        //read and accumulate fix cost
-        int totalFixCost = 0;
-        for (DataManager.TimedExpense fixCost : App.dataManager.getSavedFixCost().values()) {
-            //TODO check date of fix cost before adding to total
-            totalFixCost += fixCost.amount();
-        }
-        //calculate remaining luxury money
-        //TODO rework LuxuryCalculator to new system
-        int result = LuxuryCalculator.calculateLuxuryMoney(balance, totalExpenses);
-        result = result - deductions - totalFixCost;
-        //output calculation to view
-        outputCalculationToTable(balance, deductions, totalExpenses, totalFixCost, result);
+        LuxuryCalculator.CalculationResult calculationResult = LuxuryCalculator.calculateLuxuryMoney(balance, deductions);
+        outputCalculationToTable(balance, deductions, calculationResult);
     }
 
     @FXML

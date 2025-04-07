@@ -1,6 +1,41 @@
 package org.example.luxusrechnerjava;
 
+import java.time.LocalDate;
+import java.util.Map;
+
+import org.example.luxusrechnerjava.DataManager.TimedExpense;
+
 public class LuxuryCalculator {
+
+    public record CalculationResult(int expenses, int fixCost, int currentBudget,
+                                    int fullBudgets, int partBudget, int luxuryMoney) {
+
+    }
+
+    private static int calculateTotalExpenses(LocalDate currentDate) {
+        Map<Integer, TimedExpense> savedExpenses = App.dataManager.getSavedExpenses();
+        int totalExpenses = 0;
+        for (TimedExpense expense : savedExpenses.values()) {
+            //only consider Expenses of current Week
+            if (expense.date().isAfter(DateManager.getBeginOfWeekDate(currentDate).minusDays(1))) {
+                totalExpenses += expense.amount();
+            }
+        }
+        return totalExpenses;
+    }
+
+    private static int calculateTotalFixCost(LocalDate currentDate) {
+        Map<Integer, TimedExpense> savedFixCost = App.dataManager.getSavedFixCost();
+        int totalFixCost = 0;
+        for (TimedExpense fixCost : savedFixCost.values()) {
+            //only consider fix cost in the future
+            if (fixCost.date().isAfter(currentDate)) {
+                totalFixCost += fixCost.amount();
+            }
+        }
+        return totalFixCost;
+    }
+
     /**
      * Calculates how many full weeks are in the days to consider
      * and returns that number times the budget set in config
@@ -34,7 +69,7 @@ public class LuxuryCalculator {
         int budget = App.dataManager.getBudgetConfig();
         //read from config of part budgets are used
         boolean partBudget = App.dataManager.getPartBudgetConfig();
-        int partialBudget = 0;
+        int partialBudget;
         if (partBudget) {
             //config is set to allocate partial budget based on remaining days
             partialBudget = (budget / 7) * days;
@@ -50,13 +85,18 @@ public class LuxuryCalculator {
      * and budget for current week. Reduce budget for current week
      * by the amount of expenses
      *
-     * @param balance  Total balance including week budgets
-     * @param expenses Expenses of the current week
+     * @param balance              Total balance including week budgets
+     * @param additionalDeductions
      * @return Fraction of the balance that can be used for luxuries
      */
-    static int calculateLuxuryMoney(int balance, int expenses) {
+    static CalculationResult calculateLuxuryMoney(int balance, int additionalDeductions) {
+        LocalDate today = DateManager.getToday();
         //determine how many days are left til next income after the current week
-        int daysToCycleEnd = DateManager.getDaysToCycleEnd(DateManager.getEndOfWeekDate(DateManager.getToday()));
+        int daysToCycleEnd = DateManager.getDaysToCycleEnd(DateManager.getEndOfWeekDate(today));
+
+        int totalExpenses = calculateTotalExpenses(today);
+
+        int totalFixCost = calculateTotalFixCost(today);
         //get the sum of week budgets for the full weeks in the remaining days
         int fullWeekBudgets = calculateFullWeeksBudget(daysToCycleEnd);
         //get the budget for the partial week at end of remaining days if existing
@@ -64,9 +104,17 @@ public class LuxuryCalculator {
         //get budget for a single week from config
         int budget = App.dataManager.getBudgetConfig();
         //calculate the remaining budget for the current week
-        int currentBudget = budget - expenses;
+        int currentBudget = totalExpenses >= budget ? 0 : budget - totalExpenses;
+
         //subtract all reserved Budgets from balance to determine how much cna be used for luxuries
-        return balance - currentBudget - fullWeekBudgets - partWeekBudget;
+        int luxuryMoney = balance
+                - additionalDeductions
+                - totalFixCost
+                - currentBudget
+                - fullWeekBudgets
+                - partWeekBudget;
+        return new CalculationResult(totalExpenses, totalFixCost, currentBudget, fullWeekBudgets,
+                partWeekBudget, luxuryMoney);
     }
 
 }

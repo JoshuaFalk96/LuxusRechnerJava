@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Luxus Rechner"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "2.0-alpha.1"
 #define MyAppPublisher "Joshua Falk"
 #define MyAppURL "https://github.com/JoshuaFalk96/LuxusRechnerJava"
 #define MyAppExeName "bin\LuxuryCalculator.bat"

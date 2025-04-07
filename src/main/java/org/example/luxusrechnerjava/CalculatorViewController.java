@@ -85,7 +85,8 @@ public class CalculatorViewController extends SubViewController {
         if (balance == null || expenses == null) return; //inputs are not set correctly
 
         //call calculator to determine luxury budget
-        int luxuryMoney = LuxuryCalculator.calculateLuxuryMoney(balance, expenses);
+        //int luxuryMoney = LuxuryCalculator.calculateLuxuryMoney(balance, expenses);
+        int luxuryMoney = 0;
 
         //read week budget from config
         int budget = App.dataManager.getBudgetConfig();

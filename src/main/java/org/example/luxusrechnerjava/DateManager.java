@@ -2,6 +2,7 @@ package org.example.luxusrechnerjava;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class DateManager {
@@ -20,10 +21,10 @@ public class DateManager {
      * Uses config to determine definition of a week,
      * either Monday to Sunday or 7-day intervals starting at reset day
      *
-     * @param dateInWeek Date from which the next end of week is to find
+     * @param currentDate Date from which the next end of week is to find
      * @return LocalDate object for date at the end of given week
      */
-    static LocalDate getEndOfWeekDate(LocalDate dateInWeek) {
+    static LocalDate getEndOfWeekDate(LocalDate currentDate) {
         //read the week format from config
         DataManager.WeekFormat weekFormat = App.dataManager.getWeekFormatConfig();
         int daysToWeekEnd = 7;
@@ -31,12 +32,12 @@ public class DateManager {
             //week is defined as 7-day intervals starting reset day
             LocalDate resetDate = App.dataManager.getBeginDate();
             //get days from reset day to input date
-            int daysSinceReset = (int) resetDate.until(dateInWeek, ChronoUnit.DAYS);
+            int daysSinceReset = (int) resetDate.until(currentDate, ChronoUnit.DAYS);
             //remove full 7-day intervals and subtract passed days in current week
             daysToWeekEnd = 6 - (daysSinceReset % 7);
         } else {
             //week is defined as Monday to Sunday
-            DayOfWeek dayOfWeek = dateInWeek.getDayOfWeek();
+            DayOfWeek dayOfWeek = currentDate.getDayOfWeek();
             //depending on day of week how many days til sunday
             switch (dayOfWeek) {
                 case MONDAY -> daysToWeekEnd = 6;
@@ -49,23 +50,38 @@ public class DateManager {
             }
         }
         //if daysToWeekEnd == 0 input is end of week
-        if (daysToWeekEnd == 0) return dateInWeek;
-        return dateInWeek.plusDays(daysToWeekEnd);
+        if (daysToWeekEnd == 0) return currentDate;
+        return currentDate.plusDays(daysToWeekEnd);
     }
 
-    /**
-     * Based on reset date and cycle length config
-     * determines date at which the cycle ends
-     *
-     * @return LocalDate object for the date the cycle ends
-     */
-    static LocalDate getEndOfCycleDate() {
-        //get reset date and cycle length from config
-        LocalDate resetDate = App.dataManager.getBeginDate();
-        int cycleLength = App.dataManager.getCycleLengthConfig();
-        //end of cycle date ist cycle length days after reset date
-        //-1 to consider current reset as inclusive and next reset date as exclusive
-        return resetDate.plusDays(cycleLength -1 );
+    public static LocalDate getBeginOfWeekDate(LocalDate currentDate) {
+        //read the week format from config
+        DataManager.WeekFormat weekFormat = App.dataManager.getWeekFormatConfig();
+        int daysFromWeekStart = 0;
+        if (weekFormat == DataManager.WeekFormat.SEVEN_DAYS) {
+            //week is defined as 7-day intervals starting reset day
+            LocalDate resetDate = App.dataManager.getBeginDate();
+            //get days from reset day to input date
+            int daysSinceReset = (int) resetDate.until(currentDate, ChronoUnit.DAYS);
+            //remove full 7-day intervals
+            daysFromWeekStart = daysSinceReset % 7;
+        } else {
+            //week is defined as Monday to Sunday
+            DayOfWeek dayOfWeek = currentDate.getDayOfWeek();
+            //depending on day of week how many days since monday
+            switch (dayOfWeek) {
+                case MONDAY -> daysFromWeekStart = 0;
+                case TUESDAY -> daysFromWeekStart = 1;
+                case WEDNESDAY -> daysFromWeekStart = 2;
+                case THURSDAY -> daysFromWeekStart = 3;
+                case FRIDAY -> daysFromWeekStart = 4;
+                case SATURDAY -> daysFromWeekStart = 5;
+                case SUNDAY -> daysFromWeekStart = 6;
+            }
+        }
+        //if daysFromWeekStart == 0 input is start of week
+        if (daysFromWeekStart == 0) return currentDate;
+        return currentDate.minusDays(daysFromWeekStart);
     }
 
     /**
@@ -75,6 +91,6 @@ public class DateManager {
      * @return Days to end of cycle
      */
     static int getDaysToCycleEnd(LocalDate date) {
-        return (int)date.until(getEndOfCycleDate(), ChronoUnit.DAYS);
+        return (int) date.until(App.dataManager.getEndDate(), ChronoUnit.DAYS);
     }
 }
