@@ -2,7 +2,6 @@ package org.example.luxusrechnerjava;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class DateManager {

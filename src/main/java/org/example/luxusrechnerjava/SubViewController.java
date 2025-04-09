@@ -13,7 +13,8 @@ public abstract class SubViewController {
     @FXML
     private Button returnButton;
 
-    public void initialize() {
+    @FXML
+    protected void initialize() {
         //set default focus on return button
         Platform.runLater(() -> returnButton.requestFocus());
     }

@@ -31,15 +31,6 @@ public class IOHandler {
     private static final int CURRENCY_CONVERSION_FACTOR = 100; //for currencies with smaller currency like Euro and Cent, 1 otherwise
     private static final String INPUT_EMPTY = "Input Notwendig";
     private static final String INPUT_NOT_INT = "Keine korrekte Zahl eingegeben";
-    private static final String REMAINING_DAYS_1 = " und ";
-    private static final String REMAINING_DAYS_2_SINGULAR = " Tag";
-    private static final String REMAINING_DAYS_2_PLURAL = " Tage";
-    private static final String REMAINING_WEEKS_NOT_EXIST = "Noch diese Woche";
-    private static final String REMAINING_WEEKS_EXIST = "Nach dieser Woche noch ";
-    private static final String REMAINING_WEEKS_SINGULAR = " Woche";
-    private static final String REMAINING_WEEKS_PLURAL = " Wochen";
-    private static final String NEW_EXPENSES_1 = "Eine Ausgabe von ";
-    private static final String NEW_EXPENSES_2 = " wurde gespeichert";
     private static final String CURRENTLY = "Aktuell: ";
     private static final String DAYS = " Tage";
     private static final String TIME_SPAN_SEPARATOR = " bis ";
@@ -105,33 +96,6 @@ public class IOHandler {
 
     }
 
-    public static String buildRemainingTimeOutput(int totalDays) {
-        int weeks = totalDays / 7;
-        int days = totalDays % 7;
-        boolean partWeek = App.dataManager.getPartBudgetConfig();
-        if (!partWeek && days != 0) {
-            //if partial weeks are treated as full weeks and a partial week exists
-            //add partial week as full week
-            weeks++;
-            //disregard partial week display
-            days = 0;
-        }
-        //if partial week exists add to output in days
-        String remainingDaysString;
-        switch (days) {
-            case 0 -> remainingDaysString = "";
-            case 1 -> remainingDaysString = REMAINING_DAYS_1 + days + REMAINING_DAYS_2_SINGULAR;
-            default -> remainingDaysString = REMAINING_DAYS_1 + days + REMAINING_DAYS_2_PLURAL;
-        }
-        String remainingWeeksString;
-        switch (weeks) {
-            case 0 -> remainingWeeksString = REMAINING_WEEKS_NOT_EXIST;
-            case 1 -> remainingWeeksString = REMAINING_WEEKS_EXIST + weeks + REMAINING_WEEKS_SINGULAR;
-            default -> remainingWeeksString = REMAINING_WEEKS_EXIST + weeks + REMAINING_WEEKS_PLURAL;
-        }
-        return remainingWeeksString + remainingDaysString;
-    }
-
     /**
      * Converts internal money value to String with
      * divider for sub currency, e.g. Euro,Cent
@@ -148,10 +112,6 @@ public class IOHandler {
             fractionString.insert(0, "0");
         }
         return FRONT_CURRENCY_SYMBOL + (amount / CURRENCY_CONVERSION_FACTOR) + SUB_CURRENCY_DIVIDER + fractionString + BACK_CURRENCY_SYMBOL;
-    }
-
-    public static String buildNexExpensesOutput(int newExpenses) {
-        return NEW_EXPENSES_1 + buildMoneyOutput(newExpenses) + NEW_EXPENSES_2;
     }
 
     public static String buildBudgetOutput(int budget) {

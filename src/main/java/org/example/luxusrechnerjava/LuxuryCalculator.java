@@ -1,9 +1,9 @@
 package org.example.luxusrechnerjava;
 
+import org.example.luxusrechnerjava.DataManager.TimedExpense;
+
 import java.time.LocalDate;
 import java.util.Map;
-
-import org.example.luxusrechnerjava.DataManager.TimedExpense;
 
 public class LuxuryCalculator {
 
@@ -81,21 +81,17 @@ public class LuxuryCalculator {
     }
 
     /**
-     * From the input balance subtract budgets for coming weeks
-     * and budget for current week. Reduce budget for current week
-     * by the amount of expenses
-     *
      * @param balance              Total balance including week budgets
-     * @param additionalDeductions
+     * @param additionalDeductions custom amount to subtract, independent of expenses and fix cost
      * @return Fraction of the balance that can be used for luxuries
      */
     static CalculationResult calculateLuxuryMoney(int balance, int additionalDeductions) {
         LocalDate today = DateManager.getToday();
         //determine how many days are left til next income after the current week
         int daysToCycleEnd = DateManager.getDaysToCycleEnd(DateManager.getEndOfWeekDate(today));
-
+        //add the relevant saved expenses together
         int totalExpenses = calculateTotalExpenses(today);
-
+        //add the relevant fix cost together
         int totalFixCost = calculateTotalFixCost(today);
         //get the sum of week budgets for the full weeks in the remaining days
         int fullWeekBudgets = calculateFullWeeksBudget(daysToCycleEnd);
@@ -103,7 +99,7 @@ public class LuxuryCalculator {
         int partWeekBudget = calculatePartBudget(daysToCycleEnd);
         //get budget for a single week from config
         int budget = App.dataManager.getBudgetConfig();
-        //calculate the remaining budget for the current week
+        //calculate the remaining budget for the current week, can not be smaller than 0
         int currentBudget = totalExpenses >= budget ? 0 : budget - totalExpenses;
 
         //subtract all reserved Budgets from balance to determine how much cna be used for luxuries

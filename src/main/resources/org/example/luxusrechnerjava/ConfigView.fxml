@@ -31,45 +31,12 @@
                <padding>
                   <Insets right="26.0" />
                </padding></HBox>
-            <HBox alignment="CENTER_RIGHT" disable="true" prefHeight="60.0" prefWidth="200.0" spacing="10.0">
-               <children>
-                  <Label text="Länge des Berechnungszeitraums" />
-                  <Button fx:id="cycleInfoButton" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
-                  <VBox alignment="CENTER">
-                     <children>
-                        <TextField fx:id="cycleInputField" prefWidth="180.0" promptText="Aktuell: 30 Tage">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </TextField>
-                        <Label fx:id="cycleErrorLabel" alignment="CENTER" prefHeight="20.0" prefWidth="180.0" textAlignment="CENTER" textFill="RED">
-                           <VBox.margin>
-                              <Insets bottom="-20.0" />
-                           </VBox.margin>
-                        </Label>
-                     </children>
-                  </VBox>
-                  <Button fx:id="cycleConfirmButton" mnemonicParsing="false" onAction="#onClickResetCycleConfirmButton" prefWidth="40.0" text="OK" />
-               </children>
-               <padding>
-                  <Insets right="26.0" />
-               </padding></HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <Label text="Wochenformat" />
                   <Button fx:id="weekFormatInfoButton" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
                   <Button fx:id="weekFormatMoSoButton" mnemonicParsing="false" onAction="#onClickWeekFormatMoSoButton" prefWidth="110.0" style="-fx-opacity: 0.75;" text="Mo - So" />
                   <Button fx:id="weekFormat7DaysButton" mnemonicParsing="false" onAction="#onClickWeekFormat7DaysButton" prefWidth="110.0" text="7 Tage ab Gehalt" />
-               </children>
-               <padding>
-                  <Insets right="26.0" />
-               </padding></HBox>
-            <HBox alignment="CENTER_RIGHT" disable="true" prefHeight="60.0" prefWidth="200.0" spacing="10.0">
-               <children>
-                  <Label text="Ausgaben Speichern" />
-                  <Button fx:id="saveExpensesInfoButton" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
-                  <Button fx:id="saveExpensesYesButton" mnemonicParsing="false" onAction="#onClickSaveExpensesYesButton" prefWidth="110.0" text="Ja" />
-                  <Button fx:id="saveExpensesNoButton" mnemonicParsing="false" onAction="#onClickSaveExpensesNoButton" prefWidth="110.0" text="Nein" />
                </children>
                <padding>
                   <Insets right="26.0" />

@@ -11,7 +11,6 @@ public class ConfigViewController extends SubViewController {
     public Button budgetConfirmButton;
     public Button cycleInfoButton;
     public TextField cycleInputField;
-    public Button cycleConfirmButton;
     public Button weekFormatInfoButton;
     public Button weekFormatMoSoButton;
     public Button weekFormat7DaysButton;
@@ -84,37 +83,19 @@ public class ConfigViewController extends SubViewController {
     public void onClickBudgetConfirmButton() {
         resetErrorLabels();
         //read new budget from input field
-        Integer newBudget = null;
+        int newBudget;
         try {
             newBudget = IOHandler.parseMoneyInput(budgetInputField.getText());
         } catch (IOHandler.NotIntInputException e) {
+            //input field was not filled correctly
             budgetErrorLabel.setText(e.getErrorText());
             return;
         }
-        if (newBudget == null) return; //input was empty or not parsable
         //save new budget to config
         App.dataManager.setBudgetConfig(newBudget);
         //empty budget input field and display new budget
         budgetInputField.setText("");
         budgetInputField.setPromptText(IOHandler.buildBudgetOutput(newBudget));
-    }
-
-    public void onClickResetCycleConfirmButton() {
-        resetErrorLabels();
-        //read new length of cycle from input field
-        Integer newCycleLength = null;
-        try {
-            newCycleLength = IOHandler.parseIntegerInput(cycleInputField.getText());
-        } catch (IOHandler.NotIntInputException e) {
-            cycleErrorLabel.setText(e.getErrorText());
-            return;
-        }
-        if (newCycleLength == null) return; //input was empty or not parsable
-        //save new cycle length to config
-        App.dataManager.setCycleLengthConfig(newCycleLength);
-        //empty cycle input and display new cycle length
-        cycleInputField.setText("");
-        cycleInputField.setPromptText(IOHandler.buildCycleOutput(newCycleLength));
     }
 
     public void onClickWeekFormatMoSoButton() {
@@ -131,22 +112,6 @@ public class ConfigViewController extends SubViewController {
         weekFormat7DaysButton.setStyle("-fx-opacity:1.0");
         //save SEVEN_DAYS to config for weekFormat
         App.dataManager.setWeekFormatConfig(WeekFormat.SEVEN_DAYS);
-    }
-
-    public void onClickSaveExpensesYesButton() {
-        //set Yes as highlighted button
-        saveExpensesYesButton.setStyle("-fx-opacity:1.0");
-        saveExpensesNoButton.setStyle("-fx-opacity:0.5");
-        //save true to config for saveExpenses
-        App.dataManager.setSaveExpensesConfig(true);
-    }
-
-    public void onClickSaveExpensesNoButton() {
-        //set No as highlighted button
-        saveExpensesYesButton.setStyle("-fx-opacity:0.5");
-        saveExpensesNoButton.setStyle("-fx-opacity:1.0");
-        //save false to config for saveExpenses
-        App.dataManager.setSaveExpensesConfig(false);
     }
 
     public void onClickPartWeekPartBudgetButton() {
