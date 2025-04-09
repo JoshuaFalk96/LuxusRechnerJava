@@ -7,9 +7,7 @@ import java.time.format.DateTimeFormatter;
 
 public class IOHandler {
     public static final String BUDGET_INFO = "Wie hoch ist das Budget pro Woche in ganzen Euro";
-    public static final String CYCLE_LENGTH_INFO = "Wie viele Tage vergehen gewöhnlich zwischen Zahlungen";
     public static final String WEEK_FORMAT_INFO = "Wochen können von Montag bis Sonntag oder \n in 7 Tage Abschnitten ab Zahlungeingang berechnet werden";
-    public static final String SAVE_EXPENSES_INFO = "Sollen die Ausgaben der aktuellen Woche gespeichert werden?";
     public static final String PART_BUDGET_INFO = "Wenn der Zeitraum nicht volle Wochen enthält, werden diese \n als ganze Wochen bertachtet oder das Budget entsprechend \n der Tage verringert";
     public static final String MAIN_TITLE = "Luxusrechner";
     public static final String FIX_COST_TITLE = "Luxusrechner - Fixkosten";

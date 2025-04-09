@@ -59,7 +59,7 @@ public class ExpensesViewController extends SubViewController {
                 }
                 case FIX_COST -> {
                     //load saved fix cost
-                    savedExpensesMap = App.dataManager.getSavedFixCost();
+                    savedExpensesMap = App.dataManager.getSavedFixCosts();
                     //set label text
                     newExpenseLabel.setText(IOHandler.NEW_FIX_COST);
                     expensesOutputTable.setPlaceholder(new Label(IOHandler.FIX_COST_PLACEHOLDER));

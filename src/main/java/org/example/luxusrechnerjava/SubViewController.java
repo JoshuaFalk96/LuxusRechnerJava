@@ -26,6 +26,10 @@ public abstract class SubViewController {
     @FXML
     private void onClickReturnButton() {
         try {
+            //save changes persistently when view is changed
+            //results in less writing operations than saving with each change
+            App.dataManager.saveChanges();
+            //change view to main view
             Stage stage = (Stage) returnButton.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(SubViewController.class.getResource("MainView.fxml"));
             Scene scene = new Scene(fxmlLoader.load());

@@ -9,19 +9,13 @@ public class ConfigViewController extends SubViewController {
     public Button budgetInfoButton;
     public TextField budgetInputField;
     public Button budgetConfirmButton;
-    public Button cycleInfoButton;
-    public TextField cycleInputField;
     public Button weekFormatInfoButton;
     public Button weekFormatMoSoButton;
     public Button weekFormat7DaysButton;
-    public Button saveExpensesInfoButton;
-    public Button saveExpensesYesButton;
-    public Button saveExpensesNoButton;
     public Button partWeekInfoButton;
     public Button partWeekPartBudgetButton;
     public Button partWeekFullBudgetButton;
     public Label budgetErrorLabel;
-    public Label cycleErrorLabel;
 
 
     private void addTooltip(Control target, String text) {
@@ -35,21 +29,16 @@ public class ConfigViewController extends SubViewController {
         super.initialize();
         //add tooltips to info buttons
         addTooltip(budgetInfoButton, IOHandler.BUDGET_INFO);
-        addTooltip(cycleInfoButton, IOHandler.CYCLE_LENGTH_INFO);
         addTooltip(weekFormatInfoButton, IOHandler.WEEK_FORMAT_INFO);
-        addTooltip(saveExpensesInfoButton, IOHandler.SAVE_EXPENSES_INFO);
         addTooltip(partWeekInfoButton, IOHandler.PART_BUDGET_INFO);
 
-        //read current values for budget and cycleLength
+        //read current values for budget
         int budget = App.dataManager.getBudgetConfig();
-        int cycleLength = App.dataManager.getCycleLengthConfig();
         //output current values to input fields
         budgetInputField.setPromptText(IOHandler.buildBudgetOutput(budget));
-        cycleInputField.setPromptText(IOHandler.buildCycleOutput(cycleLength));
 
         //read weekFormat, saveExpenses and partBudget from config
         WeekFormat weekFormat = App.dataManager.getWeekFormatConfig();
-        boolean saveExpenses = App.dataManager.getSaveExpensesConfig();
         boolean partBudget = App.dataManager.getPartBudgetConfig();
         //highlight buttons for current config
         if (weekFormat == WeekFormat.MO_TO_SO) {
@@ -58,13 +47,6 @@ public class ConfigViewController extends SubViewController {
         } else {
             weekFormatMoSoButton.setStyle("-fx-opacity:0.5");
             weekFormat7DaysButton.setStyle("-fx-opacity:1.0");
-        }
-        if (saveExpenses) {
-            saveExpensesYesButton.setStyle("-fx-opacity:1.0");
-            saveExpensesNoButton.setStyle("-fx-opacity:0.5");
-        } else {
-            saveExpensesYesButton.setStyle("-fx-opacity:0.5");
-            saveExpensesNoButton.setStyle("-fx-opacity:1.0");
         }
         if (partBudget) {
             partWeekPartBudgetButton.setStyle("-fx-opacity:1.0");
@@ -77,7 +59,6 @@ public class ConfigViewController extends SubViewController {
 
     private void resetErrorLabels() {
         budgetErrorLabel.setText("");
-        cycleErrorLabel.setText("");
     }
 
     public void onClickBudgetConfirmButton() {

@@ -12,13 +12,18 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        //Path configPath = Paths.get(System.getProperty("user.home"),"LuxuryCalculator/config.properties");
-        dataManager = new RAMDataManager();
+        dataManager = new FileDataManager();
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("MainView.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle(IOHandler.MAIN_TITLE);
         stage.setScene(scene);
         stage.show();
+    }
+
+    @Override
+    public void stop() {
+        //ensures all changes are saved before program terminates
+        dataManager.saveChanges();
     }
 
     public static void main(String[] args) {

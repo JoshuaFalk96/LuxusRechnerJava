@@ -125,6 +125,10 @@ public class MainViewController {
      */
     private void openView(String fxml, String title) {
         try {
+            //save changes persistently when view is changed
+            //results in less writing operations than saving with each change
+            App.dataManager.saveChanges();
+            //open defined subview in current window
             Stage stage = (Stage) calculationOutputTable.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource(fxml));
             Scene scene = new Scene(fxmlLoader.load());

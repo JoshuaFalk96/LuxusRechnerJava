@@ -13,9 +13,7 @@ public class RAMDataManager extends DataManager {
     private Map<Integer, TimedExpense> savedExpenses;
     private Map<Integer, TimedExpense> savedFixCosts;
     private int budget;
-    private int cycleLength;
     private WeekFormat weekFormat;
-    private boolean saveExpenses;
     private boolean partBudget;
 
     /**
@@ -25,9 +23,7 @@ public class RAMDataManager extends DataManager {
         this.beginDate = LocalDate.now().minusDays(10);
         this.endDate = LocalDate.now().plusDays(20);
         this.budget = 10000;
-        this.cycleLength = 30;
         this.weekFormat = WeekFormat.MO_TO_SO;
-        this.saveExpenses = true;
         this.partBudget = false;
         TimedExpense expense = new TimedExpense(2, LocalDate.now(), 2000, "Pizza");
         this.savedExpenses = new HashMap<>();
@@ -46,24 +42,24 @@ public class RAMDataManager extends DataManager {
      * @param savedExpenses Expenses of current week
      * @param savedFixCosts Fix cost for this time span
      * @param budget        Budget for a week
-     * @param cycleLength   Length of a cycle in days
      * @param weekFormat    How are weeks defined
-     * @param saveExpenses  Should expenses be saved
      * @param partBudget    Should not full weeks get are smaller budget
      */
     RAMDataManager(LocalDate beginDate, LocalDate endDate, Map<Integer, TimedExpense> savedExpenses,
-                   Map<Integer, TimedExpense> savedFixCosts, int budget, int cycleLength, WeekFormat weekFormat,
-                   boolean saveExpenses, boolean partBudget) {
+                   Map<Integer, TimedExpense> savedFixCosts, int budget, WeekFormat weekFormat, boolean partBudget) {
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.savedExpenses = savedExpenses;
         this.savedFixCosts = savedFixCosts;
         this.budget = budget;
-        this.cycleLength = cycleLength;
         this.weekFormat = weekFormat;
-        this.saveExpenses = saveExpenses;
         this.partBudget = partBudget;
         initializeID();
+    }
+
+    @Override
+    void saveChanges() {
+        //not relevant for this manger
     }
 
     @Override
@@ -82,7 +78,7 @@ public class RAMDataManager extends DataManager {
     }
 
     @Override
-    Map<Integer, TimedExpense> getSavedFixCost() {
+    Map<Integer, TimedExpense> getSavedFixCosts() {
         return Map.copyOf(savedFixCosts);
     }
 
@@ -92,18 +88,8 @@ public class RAMDataManager extends DataManager {
     }
 
     @Override
-    int getCycleLengthConfig() {
-        return cycleLength;
-    }
-
-    @Override
     WeekFormat getWeekFormatConfig() {
         return weekFormat;
-    }
-
-    @Override
-    boolean getSaveExpensesConfig() {
-        return saveExpenses;
     }
 
     @Override
@@ -127,7 +113,7 @@ public class RAMDataManager extends DataManager {
     }
 
     @Override
-    void setSavedFixCost(Map<Integer, TimedExpense> fixCosts) {
+    void setSavedFixCosts(Map<Integer, TimedExpense> fixCosts) {
         this.savedFixCosts = new HashMap<>(fixCosts);
     }
 
@@ -137,18 +123,8 @@ public class RAMDataManager extends DataManager {
     }
 
     @Override
-    void setCycleLengthConfig(int days) {
-        this.cycleLength = days;
-    }
-
-    @Override
     void setWeekFormatConfig(WeekFormat format) {
         this.weekFormat = format;
-    }
-
-    @Override
-    void setSaveExpensesConfig(boolean isSaveExpenses) {
-        this.saveExpenses = isSaveExpenses;
     }
 
     @Override

@@ -1,195 +1,239 @@
 package org.example.luxusrechnerjava;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
 public class FileDataManager extends DataManager {
+    //file paths
+    private final Path CONFIG_FILE_PATH = Paths.get("../UserData/config.properties");
+    private final Path EXPENSES_FILE_PATH = Paths.get("../UserData/savedExpenses.json");
+    private final Path FIX_COST_FILE_PATH = Paths.get("../UserData/fixCosts.json");
+    //data objects
     private final Properties config;
-    private final FileWriter configFileWriter;
-    private final String RESET_DATE_NAME = "resetDate";
-    private final String SAVED_EXPENSES_NAME = "savedExpenses";
+    private Map<Integer, TimedExpense> savedExpenses;
+    private Map<Integer, TimedExpense> savedFixCosts;
+    //identifier names for config
+    private final String START_DATE_NAME = "startDate";
+    private final String END_DATE_NAME = "endDate";
     private final String BUDGET_NAME = "budget";
-    private final String CYCLE_LENGTH_NAME = "cycleLength";
     private final String WEEK_FORMAT_NAME = "weekFormat";
-    private final String SAVE_EXPENSES_CONFIG_NAME = "saveExpensesConfig";
     private final String PART_BUDGET_NAME = "partBudget";
-    private final String STORE_COMMENT = "Einstellungen von Luxus Rechner";
+    //default values for config
+    //default start day it first of current month
+    private final String START_DATE_DEFAULT = DateManager.getToday().withDayOfMonth(1).toString();
+    //default end date is first of next month
+    private final String END_DATE_DEFAULT = DateManager.getToday().withDayOfMonth(1).plusMonths(1).toString();
+    //default budget is 100.00
+    private final String BUDGET_DEFAULT = String.valueOf(10000);
+    private final String WEEK_FORMAT_DEFAULT = WeekFormat.MO_TO_SO.toString();
+    private final String PART_BUDGET_DEFAULT = String.valueOf(true);
+    //Object mapper fpr json serialization
+    private final ObjectMapper OBJECT_MAPPER;
+    //flags for which file to safe
+    private boolean configChanged = false;
+    private boolean expensesChanged = false;
+    private boolean fixCostsChanged = false;
+
 
     /**
      * initializes with default values
      */
-    FileDataManager(Path configFilePath) throws IOException {
+    FileDataManager() throws IOException {
+        //initialize object mapper
+        OBJECT_MAPPER = JsonMapper.builder()
+                .findAndAddModules()
+                .enable(SerializationFeature.INDENT_OUTPUT)
+                .build();
+        //initialize config
         config = new Properties();
-        if (Files.notExists(configFilePath)) {
+        if (Files.notExists(CONFIG_FILE_PATH)) {
             //config file does not exist then create file with default values
-            Files.createDirectories(configFilePath.getParent());
-            Files.createFile(configFilePath);
-            config.setProperty(RESET_DATE_NAME, LocalDate.now().toString());
-            config.setProperty(SAVED_EXPENSES_NAME, String.valueOf(1245));
-            config.setProperty(BUDGET_NAME, String.valueOf(10000));
-            config.setProperty(CYCLE_LENGTH_NAME, String.valueOf(30));
-            config.setProperty(WEEK_FORMAT_NAME, WeekFormat.MO_TO_SO.toString());
-            config.setProperty(SAVE_EXPENSES_CONFIG_NAME, String.valueOf(true));
-            config.setProperty(PART_BUDGET_NAME, String.valueOf(false));
+            Files.createDirectories(CONFIG_FILE_PATH.getParent());
+            Files.createFile(CONFIG_FILE_PATH);
+            config.setProperty(START_DATE_NAME, START_DATE_DEFAULT);
+            config.setProperty(END_DATE_NAME, END_DATE_DEFAULT);
+            config.setProperty(BUDGET_NAME, BUDGET_DEFAULT);
+            config.setProperty(WEEK_FORMAT_NAME, WEEK_FORMAT_DEFAULT);
+            config.setProperty(PART_BUDGET_NAME, PART_BUDGET_DEFAULT);
+            configChanged = true;
         } else {
-            config.load(new FileInputStream(configFilePath.toString()));
+            config.load(new FileInputStream(CONFIG_FILE_PATH.toString()));
         }
-        configFileWriter = new FileWriter(configFilePath.toString(), false);
-        config.store(configFileWriter, STORE_COMMENT);
+        //initialize expenses
+        savedExpenses = new HashMap<>();
+        if (Files.notExists(EXPENSES_FILE_PATH)) {
+            //saved expenses file does not exist
+            Files.createDirectories(EXPENSES_FILE_PATH.getParent());
+            Files.createFile(EXPENSES_FILE_PATH);
+            expensesChanged = true;
+        } else {
+            try (FileInputStream fileInput = new FileInputStream(EXPENSES_FILE_PATH.toString())) {
+                TypeReference<HashMap<Integer, TimedExpense>> mapType = new TypeReference<>() {
+                };
+                savedExpenses = OBJECT_MAPPER.readValue(fileInput, mapType);
+            }
+        }
+        //initialize fix cost
+        savedFixCosts = new HashMap<>();
+        if (Files.notExists(FIX_COST_FILE_PATH)) {
+            //saved expenses file does not exist
+            Files.createDirectories(FIX_COST_FILE_PATH.getParent());
+            Files.createFile(FIX_COST_FILE_PATH);
+            fixCostsChanged = true;
+        } else {
+            try (FileInputStream fileInput = new FileInputStream(FIX_COST_FILE_PATH.toString())) {
+                TypeReference<HashMap<Integer, TimedExpense>> mapType = new TypeReference<>() {
+                };
+                savedFixCosts = OBJECT_MAPPER.readValue(fileInput, mapType);
+            }
+        }
+        //save new files if necessary
+        saveChanges();
+        super.initializeID();
+    }
+
+    @Override
+    void saveChanges() {
+        if (configChanged) {
+            //write config file
+            try (FileWriter configWriter = new FileWriter(CONFIG_FILE_PATH.toString(), false)) {
+                config.store(configWriter, null);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            configChanged = false;
+        }
+        if (expensesChanged) {
+            //write expenses file
+            try (FileWriter expensesWriter = new FileWriter(EXPENSES_FILE_PATH.toString())) {
+                OBJECT_MAPPER.writeValue(expensesWriter, savedExpenses);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            expensesChanged = false;
+        }
+        if (fixCostsChanged) {
+            //write fix cost file
+            try (FileWriter fixCostWriter = new FileWriter(FIX_COST_FILE_PATH.toString())) {
+                OBJECT_MAPPER.writeValue(fixCostWriter, savedFixCosts);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            fixCostsChanged = false;
+        }
     }
 
     @Override
     LocalDate getBeginDate() {
-        return LocalDate.parse(config.getProperty(RESET_DATE_NAME));
+        return LocalDate.parse(config.getProperty(START_DATE_NAME, START_DATE_DEFAULT));
     }
 
     @Override
     LocalDate getEndDate() {
-        //TODO
-        return null;
+        return LocalDate.parse(config.getProperty(END_DATE_NAME, END_DATE_DEFAULT));
     }
 
     @Override
     Map<Integer, TimedExpense> getSavedExpenses() {
-        //TODO change to new expense format
-        return null;
+        return Map.copyOf(savedExpenses);
     }
 
     @Override
-    Map<Integer, TimedExpense> getSavedFixCost() {
-        //TODO
-        return Map.of();
+    Map<Integer, TimedExpense> getSavedFixCosts() {
+        return Map.copyOf(savedFixCosts);
     }
 
     @Override
     int getBudgetConfig() {
-        return Integer.parseInt(config.getProperty(BUDGET_NAME));
-    }
-
-    @Override
-    int getCycleLengthConfig() {
-        return Integer.parseInt(config.getProperty(CYCLE_LENGTH_NAME));
+        return Integer.parseInt(config.getProperty(BUDGET_NAME, BUDGET_DEFAULT));
     }
 
     @Override
     WeekFormat getWeekFormatConfig() {
-        return WeekFormat.valueOf(config.getProperty(WEEK_FORMAT_NAME));
-    }
-
-    @Override
-    boolean getSaveExpensesConfig() {
-        return Boolean.parseBoolean(config.getProperty(SAVE_EXPENSES_CONFIG_NAME));
+        return WeekFormat.valueOf(config.getProperty(WEEK_FORMAT_NAME, WEEK_FORMAT_DEFAULT));
     }
 
     @Override
     boolean getPartBudgetConfig() {
-        return Boolean.parseBoolean(config.getProperty(PART_BUDGET_NAME));
+        return Boolean.parseBoolean(config.getProperty(PART_BUDGET_NAME, PART_BUDGET_DEFAULT));
     }
 
     @Override
-    void setBeginDate(LocalDate resetDate) {
-        try {
-            config.setProperty(RESET_DATE_NAME, resetDate.toString());
-            config.store(configFileWriter, STORE_COMMENT);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    void setBeginDate(LocalDate beginDate) {
+        config.setProperty(START_DATE_NAME, beginDate.toString());
+        configChanged = true;
     }
 
     @Override
-    void setEndDate(LocalDate resetDate) {
-        //TODO
+    void setEndDate(LocalDate endDate) {
+        config.setProperty(END_DATE_NAME, endDate.toString());
+        configChanged = true;
     }
 
     @Override
     void setSavedExpenses(Map<Integer, TimedExpense> expenses) {
-        //TODO change to new expense format
-        try {
-            config.setProperty(SAVED_EXPENSES_NAME, String.valueOf(expenses));
-            config.store(configFileWriter, STORE_COMMENT);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        savedExpenses = new HashMap<>(expenses);
+        expensesChanged = true;
     }
 
     @Override
-    void setSavedFixCost(Map<Integer, TimedExpense> expenses) {
-        //TODO
+    void setSavedFixCosts(Map<Integer, TimedExpense> fixCosts) {
+        savedFixCosts = new HashMap<>(fixCosts);
+        fixCostsChanged = true;
     }
 
     @Override
     void setBudgetConfig(int budget) {
-        try {
-            config.setProperty(BUDGET_NAME, String.valueOf(budget));
-            config.store(configFileWriter, STORE_COMMENT);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    void setCycleLengthConfig(int days) {
-        try {
-            config.setProperty(CYCLE_LENGTH_NAME, String.valueOf(days));
-            config.store(configFileWriter, STORE_COMMENT);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        config.setProperty(BUDGET_NAME, String.valueOf(budget));
+        configChanged = true;
     }
 
     @Override
     void setWeekFormatConfig(WeekFormat format) {
-        try {
-            config.setProperty(WEEK_FORMAT_NAME, format.toString());
-            config.store(configFileWriter, STORE_COMMENT);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @Override
-    void setSaveExpensesConfig(boolean isSaveExpenses) {
-        try {
-            config.setProperty(SAVE_EXPENSES_CONFIG_NAME, String.valueOf(isSaveExpenses));
-            config.store(configFileWriter, STORE_COMMENT);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        config.setProperty(WEEK_FORMAT_NAME, format.toString());
+        configChanged = true;
     }
 
     @Override
     void setPartBudgetConfig(boolean isPartBudget) {
-        try {
-            config.setProperty(PART_BUDGET_NAME, String.valueOf(isPartBudget));
-            config.store(configFileWriter, STORE_COMMENT);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        config.setProperty(PART_BUDGET_NAME, String.valueOf(isPartBudget));
+        configChanged = true;
     }
 
     @Override
     void addSavedExpense(TimedExpense expense) {
-        //TODO add expense
+        savedExpenses.put(expense.id(), expense);
+        expensesChanged = true;
     }
 
     @Override
-    void addSavedFixCost(TimedExpense expense) {
-        //TODO
+    void addSavedFixCost(TimedExpense fixCost) {
+        savedFixCosts.put(fixCost.id(), fixCost);
+        fixCostsChanged = true;
     }
 
     @Override
     void removeSavedExpense(int id) {
-        //TODO remove expense
+        savedExpenses.remove(id);
+        expensesChanged = true;
     }
 
     @Override
     void removeSavedFixCost(int id) {
-        //TODO
+        savedFixCosts.remove(id);
+        fixCostsChanged = true;
     }
 }

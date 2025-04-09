@@ -25,7 +25,7 @@ public class LuxuryCalculator {
     }
 
     private static int calculateTotalFixCost(LocalDate currentDate) {
-        Map<Integer, TimedExpense> savedFixCost = App.dataManager.getSavedFixCost();
+        Map<Integer, TimedExpense> savedFixCost = App.dataManager.getSavedFixCosts();
         int totalFixCost = 0;
         for (TimedExpense fixCost : savedFixCost.values()) {
             //only consider fix cost in the future
