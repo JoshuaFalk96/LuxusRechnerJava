@@ -54,6 +54,14 @@ abstract class DataManager {
 
     abstract boolean getPartBudgetConfig();
 
+    abstract boolean getExpensesAutoRemovalConfig();
+
+    abstract boolean getExpensesIgnoreDateConfig();
+
+    abstract boolean getFixCostAutoTransferConfig();
+
+    abstract boolean getFixCostIgnoreDateConfig();
+
     abstract void setBeginDate(LocalDate beginDate);
 
     abstract void setEndDate(LocalDate endDate);
@@ -67,6 +75,14 @@ abstract class DataManager {
     abstract void setWeekFormatConfig(WeekFormat format);
 
     abstract void setPartBudgetConfig(boolean isPartBudget);
+
+    abstract void setExpensesAutoRemovalConfig(boolean isExpensesAutoRemoval);
+
+    abstract void setExpensesIgnoreDateConfig(boolean isExpensesIgnoreDate);
+
+    abstract void setFixCostAutoTransferConfig(boolean isFixCostAutoTransfer);
+
+    abstract void setFixCostIgnoreDateConfig(boolean isFixCostIgnoreDate);
 
     abstract void addSavedExpense(TimedExpense expense);
 

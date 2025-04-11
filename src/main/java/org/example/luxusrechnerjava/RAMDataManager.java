@@ -15,6 +15,10 @@ public class RAMDataManager extends DataManager {
     private int budget;
     private WeekFormat weekFormat;
     private boolean partBudget;
+    private boolean expensesAutoDelete;
+    private boolean expensesIgnoreDate;
+    private boolean fixCostAutoTransfer;
+    private boolean fixCostIgnoreDate;
 
     /**
      * initializes with default values
@@ -25,6 +29,10 @@ public class RAMDataManager extends DataManager {
         this.budget = 10000;
         this.weekFormat = WeekFormat.MO_TO_SO;
         this.partBudget = false;
+        this.expensesAutoDelete = false;
+        this.expensesIgnoreDate = false;
+        this.fixCostAutoTransfer = true;
+        this.fixCostIgnoreDate = false;
         TimedExpense expense = new TimedExpense(2, LocalDate.now(), 2000, "Pizza");
         this.savedExpenses = new HashMap<>();
         this.savedExpenses.put(expense.id(), expense);
@@ -44,9 +52,15 @@ public class RAMDataManager extends DataManager {
      * @param budget        Budget for a week
      * @param weekFormat    How are weeks defined
      * @param partBudget    Should not full weeks get are smaller budget
+     * @param expensesAutoDelete Should expenses from past weeks be deleted
+     * @param expensesIgnoreDate Should all expenses be considered, ignoring date
+     * @param fixCostAutoTransfer Should fix cost date be automatically changed to be in current time span
+     * @param fixCostIgnoreDate Should all fix cost be considered, ignoring date
      */
     RAMDataManager(LocalDate beginDate, LocalDate endDate, Map<Integer, TimedExpense> savedExpenses,
-                   Map<Integer, TimedExpense> savedFixCosts, int budget, WeekFormat weekFormat, boolean partBudget) {
+                   Map<Integer, TimedExpense> savedFixCosts, int budget, WeekFormat weekFormat,
+                   boolean partBudget, boolean expensesAutoDelete, boolean expensesIgnoreDate,
+                   boolean fixCostAutoTransfer, boolean fixCostIgnoreDate) {
         this.beginDate = beginDate;
         this.endDate = endDate;
         this.savedExpenses = savedExpenses;
@@ -54,8 +68,14 @@ public class RAMDataManager extends DataManager {
         this.budget = budget;
         this.weekFormat = weekFormat;
         this.partBudget = partBudget;
-        initializeID();
+        this.expensesAutoDelete = expensesAutoDelete;
+        this.expensesIgnoreDate = expensesIgnoreDate;
+        this.fixCostAutoTransfer = fixCostAutoTransfer;
+        this.fixCostIgnoreDate = fixCostIgnoreDate;
     }
+
+
+
 
     @Override
     void saveChanges() {
@@ -98,6 +118,26 @@ public class RAMDataManager extends DataManager {
     }
 
     @Override
+    boolean getExpensesAutoRemovalConfig() {
+        return expensesAutoDelete;
+    }
+
+    @Override
+    boolean getExpensesIgnoreDateConfig() {
+        return expensesIgnoreDate;
+    }
+
+    @Override
+    boolean getFixCostAutoTransferConfig() {
+        return fixCostAutoTransfer;
+    }
+
+    @Override
+    boolean getFixCostIgnoreDateConfig() {
+        return fixCostIgnoreDate;
+    }
+
+    @Override
     void setBeginDate(LocalDate beginDate) {
         this.beginDate = beginDate;
     }
@@ -130,6 +170,26 @@ public class RAMDataManager extends DataManager {
     @Override
     void setPartBudgetConfig(boolean isPartBudget) {
         this.partBudget = isPartBudget;
+    }
+
+    @Override
+    void setExpensesAutoRemovalConfig(boolean isExpensesAutoRemoval) {
+        this.expensesAutoDelete = isExpensesAutoRemoval;
+    }
+
+    @Override
+    void setExpensesIgnoreDateConfig(boolean isExpensesIgnoreDate) {
+        this.expensesIgnoreDate = isExpensesIgnoreDate;
+    }
+
+    @Override
+    void setFixCostAutoTransferConfig(boolean isFixCostAutoTransfer) {
+        this.fixCostAutoTransfer = isFixCostAutoTransfer;
+    }
+
+    @Override
+    void setFixCostIgnoreDateConfig(boolean isFixCostIgnoreDate) {
+        this.fixCostIgnoreDate = isFixCostIgnoreDate;
     }
 
     @Override

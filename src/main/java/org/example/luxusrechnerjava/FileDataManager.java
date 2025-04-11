@@ -31,6 +31,10 @@ public class FileDataManager extends DataManager {
     private final String BUDGET_NAME = "budget";
     private final String WEEK_FORMAT_NAME = "weekFormat";
     private final String PART_BUDGET_NAME = "partBudget";
+    private final String EXPENSES_AUTO_DELETE_NAME = "expensesAutoDelete";
+    private final String EXPENSES_IGNORE_DATE_NAME = "expensesIgnoreDate";
+    private final String FIX_COST_AUTO_TRANSFER_NAME = "expensesAutoTransfer";
+    private final String FIX_COST_IGNORE_DATE_NAME = "fixCostIgnoreDate";
     //default values for config
     //default start day it first of current month
     private final String START_DATE_DEFAULT = DateManager.getToday().withDayOfMonth(1).toString();
@@ -40,6 +44,10 @@ public class FileDataManager extends DataManager {
     private final String BUDGET_DEFAULT = String.valueOf(10000);
     private final String WEEK_FORMAT_DEFAULT = WeekFormat.MO_TO_SO.toString();
     private final String PART_BUDGET_DEFAULT = String.valueOf(true);
+    private final String EXPENSES_AUTO_DELETE_DEFAULT = String.valueOf(false);
+    private final String EXPENSES_IGNORE_DATE_DEFAULT = String.valueOf(false);
+    private final String FIX_COST_AUTO_TRANSFER_DEFAULT = String.valueOf(true);
+    private final String FIX_COST_IGNORE_DATE_DEFAULT = String.valueOf(false);
     //Object mapper fpr json serialization
     private final ObjectMapper OBJECT_MAPPER;
     //flags for which file to safe
@@ -68,6 +76,10 @@ public class FileDataManager extends DataManager {
             config.setProperty(BUDGET_NAME, BUDGET_DEFAULT);
             config.setProperty(WEEK_FORMAT_NAME, WEEK_FORMAT_DEFAULT);
             config.setProperty(PART_BUDGET_NAME, PART_BUDGET_DEFAULT);
+            config.setProperty(EXPENSES_AUTO_DELETE_NAME, EXPENSES_AUTO_DELETE_DEFAULT);
+            config.setProperty(EXPENSES_IGNORE_DATE_NAME, EXPENSES_IGNORE_DATE_DEFAULT);
+            config.setProperty(FIX_COST_AUTO_TRANSFER_NAME, FIX_COST_AUTO_TRANSFER_DEFAULT);
+            config.setProperty(FIX_COST_IGNORE_DATE_NAME, FIX_COST_IGNORE_DATE_DEFAULT);
             configChanged = true;
         } else {
             config.load(new FileInputStream(CONFIG_FILE_PATH.toString()));
@@ -172,6 +184,26 @@ public class FileDataManager extends DataManager {
     }
 
     @Override
+    boolean getExpensesAutoRemovalConfig() {
+        return Boolean.parseBoolean(config.getProperty(EXPENSES_AUTO_DELETE_NAME, EXPENSES_AUTO_DELETE_DEFAULT));
+    }
+
+    @Override
+    boolean getExpensesIgnoreDateConfig() {
+        return Boolean.parseBoolean(config.getProperty(EXPENSES_IGNORE_DATE_NAME, EXPENSES_IGNORE_DATE_DEFAULT));
+    }
+
+    @Override
+    boolean getFixCostAutoTransferConfig() {
+        return Boolean.parseBoolean(config.getProperty(FIX_COST_AUTO_TRANSFER_NAME, FIX_COST_AUTO_TRANSFER_DEFAULT));
+    }
+
+    @Override
+    boolean getFixCostIgnoreDateConfig() {
+        return Boolean.parseBoolean(config.getProperty(FIX_COST_IGNORE_DATE_NAME, FIX_COST_IGNORE_DATE_DEFAULT));
+    }
+
+    @Override
     void setBeginDate(LocalDate beginDate) {
         config.setProperty(START_DATE_NAME, beginDate.toString());
         configChanged = true;
@@ -210,6 +242,30 @@ public class FileDataManager extends DataManager {
     @Override
     void setPartBudgetConfig(boolean isPartBudget) {
         config.setProperty(PART_BUDGET_NAME, String.valueOf(isPartBudget));
+        configChanged = true;
+    }
+
+    @Override
+    void setExpensesAutoRemovalConfig(boolean isExpensesAutoRemoval) {
+        config.setProperty(EXPENSES_AUTO_DELETE_NAME, String.valueOf(isExpensesAutoRemoval));
+        configChanged = true;
+    }
+
+    @Override
+    void setExpensesIgnoreDateConfig(boolean isExpensesIgnoreDate) {
+        config.setProperty(EXPENSES_IGNORE_DATE_NAME, String.valueOf(isExpensesIgnoreDate));
+        configChanged = true;
+    }
+
+    @Override
+    void setFixCostAutoTransferConfig(boolean isFixCostAutoTransfer) {
+        config.setProperty(FIX_COST_AUTO_TRANSFER_NAME, String.valueOf(isFixCostAutoTransfer));
+        configChanged = true;
+    }
+
+    @Override
+    void setFixCostIgnoreDateConfig(boolean isFixCostIgnoreDate) {
+        config.setProperty(FIX_COST_IGNORE_DATE_NAME, String.valueOf(isFixCostIgnoreDate));
         configChanged = true;
     }
 

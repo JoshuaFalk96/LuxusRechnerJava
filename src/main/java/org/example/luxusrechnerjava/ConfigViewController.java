@@ -17,7 +17,7 @@ public class ConfigViewController extends SubViewController {
     public Button partWeekFullBudgetButton;
     public Label budgetErrorLabel;
 
-
+    //TODO controls for new configs
     private void addTooltip(Control target, String text) {
         Tooltip tooltip = new Tooltip(text);
         tooltip.setShowDelay(new Duration(0));

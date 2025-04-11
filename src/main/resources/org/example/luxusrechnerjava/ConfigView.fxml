@@ -29,28 +29,72 @@
                   <Button fx:id="budgetConfirmButton" mnemonicParsing="false" onAction="#onClickBudgetConfirmButton" prefWidth="40.0" text="OK" />
                </children>
                <padding>
-                  <Insets right="26.0" />
+                  <Insets right="27.0" />
                </padding></HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="200.0" spacing="10.0">
                <children>
                   <Label text="Wochenformat" />
                   <Button fx:id="weekFormatInfoButton" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
-                  <Button fx:id="weekFormatMoSoButton" mnemonicParsing="false" onAction="#onClickWeekFormatMoSoButton" prefWidth="110.0" style="-fx-opacity: 0.75;" text="Mo - So" />
-                  <Button fx:id="weekFormat7DaysButton" mnemonicParsing="false" onAction="#onClickWeekFormat7DaysButton" prefWidth="110.0" text="7 Tage ab Gehalt" />
+                  <Button fx:id="weekFormatMoSoButton" mnemonicParsing="false" onAction="#onClickWeekFormatMoSoButton" prefWidth="115.0" style="-fx-opacity: 0.75;" text="Mo - So" />
+                  <Button fx:id="weekFormat7DaysButton" mnemonicParsing="false" onAction="#onClickWeekFormat7DaysButton" prefWidth="115.0" text="7 Tage ab Gehalt" />
                </children>
                <padding>
-                  <Insets right="26.0" />
+                  <Insets right="17.0" />
                </padding></HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="200.0" spacing="10.0">
                <children>
-                  <Label text="Verhalten bei Teilwochen" />
+                  <Label text="Budget für kürzere letzte Woche" />
                   <Button fx:id="partWeekInfoButton" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
-                  <Button fx:id="partWeekPartBudgetButton" mnemonicParsing="false" onAction="#onClickPartWeekPartBudgetButton" prefWidth="110.0" text="Teil Budget" />
-                  <Button fx:id="partWeekFullBudgetButton" mnemonicParsing="false" onAction="#onClickPartWeekFullBudgetButton" prefWidth="110.0" text="Volles Budget" />
+                  <Button fx:id="partWeekPartBudgetButton" mnemonicParsing="false" onAction="#onClickPartWeekPartBudgetButton" prefWidth="115.0" text="Teil Budget" />
+                  <Button fx:id="partWeekFullBudgetButton" mnemonicParsing="false" onAction="#onClickPartWeekFullBudgetButton" prefWidth="115.0" text="Volles Budget" />
                </children>
                <padding>
-                  <Insets right="26.0" />
+                  <Insets right="17.0" />
                </padding></HBox>
+            <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="200.0" prefHeight="60.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label text="Ausgaben ignorieren Datum" />
+                  <Button fx:id="expensesIgnoreDateInfoButton" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
+                  <Button fx:id="expensesIgnoreDateYesButton" mnemonicParsing="false" onAction="#onClickExpensesIgnoreDateYesButton" prefWidth="115.0" text=" Datum ignorieren" />
+                  <Button fx:id="expensesIgnoreDateNoButton" mnemonicParsing="false" onAction="#onClickExpensesIgnoreDateNoButton" prefWidth="115.0" text="Datum beachten" />
+               </children>
+               <padding>
+                  <Insets right="17.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="290.0" prefHeight="60.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label text="Veraltete Ausgaben automatisch löschen" />
+                  <Button fx:id="expensesAutoDeleteInfoButton" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
+                  <Button fx:id="expensesAutoDeleteYesButton" mnemonicParsing="false" onAction="#onClickExpensesAutoDeleteYesButton" prefWidth="115.0" text="Löschen" />
+                  <Button fx:id="expensesAutoDeleteNoButton" mnemonicParsing="false" onAction="#onClickExpensesAutoDeleteNoButton" prefWidth="115.0" text="Behalten" />
+               </children>
+               <padding>
+                  <Insets right="17.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="320.0" prefHeight="60.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label text="Fixkosten ignorieren Datum" />
+                  <Button fx:id="fixCostIgnoreDateInfoButton" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
+                  <Button fx:id="fixCostIgnoreDateYesButton" mnemonicParsing="false" onAction="#onClickFixCostIgnoreDateYesButton" prefWidth="115.0" text="Datum ignorieren" />
+                  <Button fx:id="fixCostIgnoreDateNoButton" mnemonicParsing="false" onAction="#onClickFixCostIgnoreDateNoButton" prefWidth="115.0" text="Datum beachten" />
+               </children>
+               <padding>
+                  <Insets right="17.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="335.0" prefHeight="60.0" prefWidth="200.0" spacing="10.0">
+               <children>
+                  <Label text="Fixkosten in neuen Zeitraum übernehmen" />
+                  <Button fx:id="fixCostAutoTransferInfoButton" focusTraversable="false" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-radius: 30;" text="?" />
+                  <Button fx:id="fixCostAutoTransferYesButton" mnemonicParsing="false" onAction="#onClickFixCostAutoTransferYesButton" prefWidth="115.0" text="Anpassen" />
+                  <Button fx:id="fixCostAutoFransferNoButton" mnemonicParsing="false" onAction="#onClickFixCostAutoTransferNoButton" prefWidth="115.0" text="Nicht Anpassen" />
+               </children>
+               <padding>
+                  <Insets right="17.0" />
+               </padding>
+            </HBox>
             <HBox alignment="CENTER" prefHeight="60.0" prefWidth="200.0">
                <children>
                   <Button fx:id="returnButton" mnemonicParsing="false" onAction="#onClickReturnButton" prefWidth="130.0" text="Zurück" textAlignment="CENTER" />
